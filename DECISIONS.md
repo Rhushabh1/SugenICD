@@ -68,9 +68,14 @@ alternative -> switch to weighted RRF or combSUM
 measurement -> RRF achieved Hit@1 16.67%, Hit@3 36.67%, Hit@5 45.00%, Hit@10 55.00%, Hit@20 63.33%, Hit@50 73.33%. weighted RRF achieved Hit@50 58.33%, while CombSUM achieved 71.67%. combSUM had slightly better Hit@20 (65.00% vs 63.33%)
 revisit -> reconsider fusion weights/methods if LLM eval shows candidate recall can be improved
 
-
 commit 5
 
+[11/11/2026, 03:08]
+decision -> picked qwen3:1.7b over qwen3:0.6b for LLM reranker, better clinical response
+alternative -> sentence transformers, high resource model, low resource model with less accurate response
+revisit -> maintain fallback when LLM fails
+
+commit 6
 
 
 
