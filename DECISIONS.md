@@ -44,3 +44,16 @@ revisit -> expand dictionary based on observed retrieval errors and validation r
 
 commit 3
 
+[10/11/2026, 01:22]
+decision -> use fastembed and bge embeddings for semantic retrieval independent of lexical retrieval, small model, runs on cpu, uses onnx runtime
+alternative -> use only lexical retrieval, use a larger embedding model wih higher resources, use external embedding API (not allowed)
+revisit -> evaluate semantic retrieval again after combining it with lexical, maybe consider different embedding model if hybrid retrieval doesn't improve 
+
+[10/11/2026, 02:02]
+decision -> saving ICD catalogue embeddings in index file, for faster semantic retrieval across runs
+alternative -> no cached embeddings, lead to long embeddings generation time
+revisit -> ensure index corresponds to current ICD catalogue nd embedding model
+
+commit 4
+
+

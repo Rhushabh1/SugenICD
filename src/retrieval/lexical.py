@@ -55,6 +55,7 @@ def build_index(mms_file):
 		if parent_uri in uri_to_code:
 			parents[entry["code"]] = uri_to_code[parent_uri]
 
+	# pass details which are used in search()
 	return conn, parents
 
 
