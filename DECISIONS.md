@@ -36,7 +36,7 @@ decision -> use sqlite fts5 with bm25 for lexical retrieval of ICD category cand
 alternative -> keyword matching only or introduce elasticsearch or another external search tool -> extra lib dependency
 revisit -> analyse missed gold codes and improve retrieval before adding semantic retrieval
 
-[10/11/2026, 00:53]
+[11/11/2026, 00:53]
 decision -> no truncation of tokens to top 50 & manually expanding clinical & anatomical synonyms for better hit
 measurement -> Hit@20: 25/60 = 41.67% improved to now Hit@20: 31/60 = 51.67%
 alternative -> use only original note tokens, introduces larger external medical terminology database
@@ -44,16 +44,33 @@ revisit -> expand dictionary based on observed retrieval errors and validation r
 
 commit 3
 
-[10/11/2026, 01:22]
+[11/11/2026, 01:22]
 decision -> use fastembed and bge embeddings for semantic retrieval independent of lexical retrieval, small model, runs on cpu, uses onnx runtime
 alternative -> use only lexical retrieval, use a larger embedding model wih higher resources, use external embedding API (not allowed)
 revisit -> evaluate semantic retrieval again after combining it with lexical, maybe consider different embedding model if hybrid retrieval doesn't improve 
 
-[10/11/2026, 02:02]
+[11/11/2026, 02:02]
 decision -> saving ICD catalogue embeddings in index file, for faster semantic retrieval across runs
 alternative -> no cached embeddings, lead to long embeddings generation time
 revisit -> ensure index corresponds to current ICD catalogue nd embedding model
 
 commit 4
+
+[11/11/2026, 02:11]
+decision -> combined fts5/bm25 & fastembed ranks using RRF (k = 60), retrieving top 50 candidates
+alternative -> use only one retriever or directly combine their raw scores, use other rerankers like weighted RRF, etc.
+measurement -> Hit@20: 38/60 = 63.33% which is better than semantic/lexical. hybrid loses to lexical in hit@1,3 but wins over both in hit@5,10,20. I expected this = maximise recall first, then improve ranking later
+revisit -> experiment with retrieval limits, RRF params, rank improvement based on error analysis, add other rerankers like weighted RRF & combSUM & combMNZ
+
+[11/11/2026, 03:04]
+decision -> retaining RRF with k=60 over weighted RRF & combSUM because we can use LLM to rerank better but missing retrieval will damage more
+alternative -> switch to weighted RRF or combSUM
+measurement -> RRF achieved Hit@1 16.67%, Hit@3 36.67%, Hit@5 45.00%, Hit@10 55.00%, Hit@20 63.33%, Hit@50 73.33%. weighted RRF achieved Hit@50 58.33%, while CombSUM achieved 71.67%. combSUM had slightly better Hit@20 (65.00% vs 63.33%)
+revisit -> reconsider fusion weights/methods if LLM eval shows candidate recall can be improved
+
+
+commit 5
+
+
 
 
