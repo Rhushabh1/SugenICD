@@ -1,0 +1,6 @@
+services:
+  coder:
+    build: .
+    volumes: 
+      - ./data:/in:ro
+      - ./out:/out

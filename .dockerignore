@@ -1,0 +1,7 @@
+__pycache__/
+out/
+tests/
+indexes/
+.git
+.venv
+*.pyc
