@@ -77,5 +77,18 @@ revisit -> maintain fallback when LLM fails
 
 commit 6
 
+[11/11/2026, 04:24]
+decision -> qwen selected broader category instead of more specific one, need to utilize parent-child relation, pass hierarchy info to LLM, but avoid using residual flag as LLM is confusing it with clinical terminology, fixing URI-based hierarchy mapping 
+alternative -> 
+measurement -> dev-001 is predicated as 1F40 instead of the specific gold code 1F40.Z in this case, hierarchy is faulty as the 1F40.* leafs are not registering 1F40 as its parent
+revisit -> incorporate parent hierarchy in candidates retrieval
+
+[11/11/2026, 05:08]
+decision -> to implement hierarchy aware reranking, remove non-leaf parent categories
+alternative -> repeatedly adding prompt instructions to LLM isn't fixing small model's code-selection errors
+revisit -> when done with reranker optimizations
+
+
+
 
 

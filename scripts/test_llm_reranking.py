@@ -14,8 +14,7 @@ NOTES_FILE = ROOT / "data" / "dev_notes.jsonl"
 MMS_FILE = ROOT / "data" / "mms-2026-01.json"
 
 
-# loading the dev notes
-# notes = []
+# loading the first dev note
 with open(NOTES_FILE, "r", encoding = "utf-8") as file:
 	# for line in file:
 	# 	if line.strip():
@@ -41,6 +40,16 @@ print("\nRetrieving candidates...")
 candidates = hybrid_search(note["text"], lexical_conn, parents, model, catalogue, embeddings, limit = 50, method = "rrf")
 print(f"Candidates retrieved: {len(candidates)}")
 
+
+# inspecting malaria candidates
+catalogue_by_code = {entry["code"]: entry for entry in catalogue}
+
+# add catalogue metadata to retrieved candidates
+for candidate in candidates:
+    entry = catalogue_by_code[candidate["code"]]
+    candidate["leaf"] = entry["leaf"]
+
+
 # run LLM reranker
 print("\nRunning qwen3:1.7b reranking...")
 result = rerank(note["text"], candidates)
@@ -51,13 +60,17 @@ print(f"\nSelected codes: {result["codes"]}")
 print(f"\nReason: {result["reason"]}")
 print(f"\nGold codes: {note["gold"]}")
 
+# evaluate this note
+gold_codes = set(note["gold"])
+pred_codes = result["codes"]
+
 # testing retrieval recall
 candidate_codes = [candidate["code"] for candidate in candidates]
-print(f"\nCorrect code retrieved: {set(note["gold"]).intersection(candidate_codes)}")
+print(f"\nCorrect code retrieved: {gold_codes.intersection(candidate_codes)}")
 
 # testing LLM reranker
-print(f"\ntop-1: {bool(set(note["gold"]).intersection(result["codes"][:1]))}")
-print(f"\ntop-3: {bool(set(note["gold"]).intersection(result["codes"][:3]))}")
+print(f"\ntop-1: {bool(gold_codes.intersection(pred_codes[:1]))}")
+print(f"\ntop-3: {bool(gold_codes.intersection(pred_codes[:3]))}")
 
 
 lexical_conn.close()

@@ -42,17 +42,25 @@ def build_index(mms_file):
 		np.save(index_file, embeddings)
 
 
-	# find parent categories using URI hierarchy
-	# need uri-to-code mapping for uri splitting to find parent
-	uri_to_code = {entry["uri"]: entry["code"] for entry in catalogue}
+	# find parent categories using ICD codes hierarchy
+	# need code-to-entry mapping for ICD code splitting to find parent
+	code_to_entry = {entry["code"]: entry for entry in catalogue}
 
 	# map of (code -> parent code)
 	parents = {}
 	for entry in catalogue:
-		parent_uri = entry["uri"].rsplit("/", 1)[0]
+		code = entry["code"]
 
-		if parent_uri in uri_to_code:
-			parents[entry["code"]] = uri_to_code[parent_uri]
+		# possibly leaf node
+		if "." in code:
+			parent_code = code.rsplit(".", 1)[0]
+
+			if parent_code in code_to_entry:
+				parent = code_to_entry[parent_code]
+
+				# valid depth check
+				if parent["depth"] < entry["depth"]:
+					parents[code] = parent_code
 
 	# pass details which are used in search()
 	return model, catalogue, embeddings, parents
