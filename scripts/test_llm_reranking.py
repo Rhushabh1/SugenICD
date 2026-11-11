@@ -5,7 +5,7 @@ from pathlib import Path
 from src.retrieval.lexical import build_index as build_lexical_index
 from src.retrieval.semantic import build_index as build_semantic_index
 from src.retrieval.hybrid import search as hybrid_search
-from src.reranking.llm import rerank
+from src.reranking.llm import rerank, filter_candidates
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -46,13 +46,33 @@ catalogue_by_code = {entry["code"]: entry for entry in catalogue}
 
 # add catalogue metadata to retrieved candidates
 for candidate in candidates:
-    entry = catalogue_by_code[candidate["code"]]
-    candidate["leaf"] = entry["leaf"]
+	entry = catalogue_by_code[candidate["code"]]
+	candidate["leaf"] = entry["leaf"]
+
+
+
+# inspect whether the gold code was retrieved
+gold_codes = set(note["gold"])
+candidate_codes = [candidate["code"] for candidate in candidates]
+
+print("\nGold codes:", gold_codes)
+print("Gold retrieved:", gold_codes.intersection(candidate_codes))
+
+# inspect the candidates passed through the filter
+filtered_candidates = filter_candidates(note["text"], candidates)
+filtered_codes = [candidate["code"] for candidate in filtered_candidates]
+
+print("\nGold codes after filtering:", gold_codes.intersection(filtered_codes))
+
+print("\nRelevant malaria candidates:")
+for candidate in candidates:
+	if candidate["code"].startswith(("1F40", "1F41")):
+		print(f"{candidate["code"]} | leaf: {candidate["leaf"]} | {candidate["title"]} | passed filter: {[candidate["code"] in filtered_codes]}")
 
 
 # run LLM reranker
 print("\nRunning qwen3:1.7b reranking...")
-result = rerank(note["text"], candidates)
+result = rerank(note["text"], candidates, catalogue_by_code, model = "qwen3:1.7b")
 
 # show note prediction stats
 print(f"\nNote: {note["text"]}")

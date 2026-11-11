@@ -19,7 +19,13 @@ def filter_candidates(note, candidates):
 
 		# exclude complication-related codes when note explicitly says uncomplicated
 		if "uncomplicated" in note:
-			if any(word in title for word in ["severe", "complicated", "complication"]):
+			title_words = title.split()
+
+			if "severe" in title_words or "complicated" in title_words:
+				continue
+
+			# to not get confused with "without complications"
+			if "with" in title_words and ("complication" in title_words or "complications" in title_words):
 				continue
 
 		filtered_candidates.append(candidate)
@@ -28,7 +34,14 @@ def filter_candidates(note, candidates):
 
 
 # LLM reranking function
-def rerank(note, candidates, model = "qwen3:1.7b"):
+def rerank(note, candidates, catalogue_by_code, model = "qwen3:1.7b"):
+	# add leaf metadata
+	for candidate in candidates:
+		entry = catalogue_by_code.get(candidate["code"])
+		if entry:
+			candidate["leaf"] = entry["leaf"]
+
+	# basic leaf node and keyword filtering
 	candidates = filter_candidates(note, candidates)
 	candidate_list = []
 
@@ -112,24 +125,49 @@ Return only valid JSON in this format:
 		print("Ollama returned empty response")
 		return {
 				"codes": [],
-				"reason": ""
+				"reason": "",
+				# for error analysis
+				"raw_response": "",
+				# codes originally returned
+				"raw_codes": [],
+				# returned codes which were invalid
+				"invalid_codes": [],
+				# candidates actually sent to LLM
+				"candidate_codes": [candidate["code"] for candidate in candidates],
+				"candidate_details": [{
+									"code": candidate["code"], 
+									"title": candidate["title"]
+									} for candidate in candidates]
 				}
 
 	output = json.loads(content)
 
 	# validate codes against retrieved candidates
-	valid_codes = {candidate["code"] for candidate in candidates}
+	valid_codes = {candidate["code"] for candidate in candidates if candidate["leaf"]}
 
 	# extract top 3 codes from output
 	selected_codes = []
-	for code in output.get("codes", []):
+	invalid_codes = []
+	raw_codes = output.get("codes", [])
+	
+	for code in raw_codes:
 		if code in valid_codes and code not in selected_codes:
 			selected_codes.append(code)
+		elif code not in valid_codes:
+			invalid_codes.append(code)
 
 		if len(selected_codes) == 3:
 			break
 
 	return {
 			"codes": selected_codes,
-			"reason": output.get("reason", "")
+			"reason": output.get("reason", ""),
+			"raw_response": content,
+			"raw_codes": raw_codes,
+			"invalid_codes": invalid_codes,
+			"candidate_codes": [candidate["code"] for candidate in candidates],
+			"candidate_details": [{
+								"code": candidate["code"], 
+								"title": candidate["title"]
+								} for candidate in candidates]
 			}

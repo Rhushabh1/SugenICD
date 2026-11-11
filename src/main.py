@@ -41,34 +41,41 @@ def main():
 				continue
 
 			note = json.loads(line)
-			# normalize note
+			print(f"Processing note ID: {note["id"]}")
+
+			# normalize note for retrieval
 			normalized_text = normalize_text(note["text"])
 			
 			# retrieve candidates using hybrid search + RRF fusion
 			candidates = hybrid_search(normalized_text, lexical_conn, parents, model, catalogue, embeddings, limit = 50, method = "rrf")
 
-			# keep only leaf categories
-			leaf_candidates = []
-
-			for candidate in candidates:
-				entry = catalogue_by_code.get(candidate["code"])
-				candidate["leaf"] = entry["leaf"]
-
 			# rerank candidates using LLM
 			codes = []
 
 			try:
-				result = rerank(normalized_text, candidates, model = "qwen3:1.7b")
+				# keep normalized text only for retrieval, not LLM reranker
+				result = rerank(note["text"], candidates, catalogue_by_code, model = "qwen3:1.7b")
 
-				# # validate final codes
-				# for code in result["codes"]:
-				# 	entry = catalogue_by_code.get(code)
+				codes = result["codes"]
 
-				# 	if entry and entry["leaf"] and code not in codes:
-				# 		codes.append(code)
+				print("\nCandidates sent to LLM:")
+				print(result["candidate_codes"])
 
-				# 	if len(codes) == 3:
-				# 		break
+				print("\nRaw LLM codes:")
+				print(result["raw_codes"])
+
+				print("\nInvalid LLM codes:")
+				print(result["invalid_codes"])
+
+				print("\nLLM explanation:")
+				print(result["reason"])
+
+				print("\nRaw LLM response:")
+				print(result["raw_response"])
+
+				print("\nCandidates sent to LLM:")
+				for candidate in result["candidate_details"]:
+					print(candidate["code"], "|", candidate["title"])
 
 			except Exception as e:
 				print(f"LLM error for {note["id"]}: {str(e)}")

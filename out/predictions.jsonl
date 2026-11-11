@@ -1,60 +1,60 @@
-{"id": "dev-001", "codes": []}
-{"id": "dev-002", "codes": []}
-{"id": "dev-003", "codes": []}
-{"id": "dev-004", "codes": []}
-{"id": "dev-005", "codes": []}
-{"id": "dev-006", "codes": []}
+{"id": "dev-001", "codes": ["1F41.Z", "SP51"]}
+{"id": "dev-002", "codes": ["CA0K.Z", "1F41.Z"]}
+{"id": "dev-003", "codes": ["CA23.12", "MD11.9", "SA7Z"]}
+{"id": "dev-004", "codes": ["1A07.Z", "SP50"]}
+{"id": "dev-005", "codes": ["1F23.10", "GA00.40"]}
+{"id": "dev-006", "codes": ["1E90.2"]}
 {"id": "dev-007", "codes": []}
-{"id": "dev-008", "codes": []}
-{"id": "dev-009", "codes": []}
-{"id": "dev-010", "codes": []}
-{"id": "dev-011", "codes": []}
-{"id": "dev-012", "codes": []}
-{"id": "dev-013", "codes": []}
-{"id": "dev-014", "codes": []}
-{"id": "dev-015", "codes": []}
-{"id": "dev-016", "codes": []}
-{"id": "dev-017", "codes": []}
-{"id": "dev-018", "codes": []}
-{"id": "dev-019", "codes": []}
-{"id": "dev-020", "codes": []}
-{"id": "dev-021", "codes": []}
-{"id": "dev-022", "codes": []}
-{"id": "dev-023", "codes": []}
-{"id": "dev-024", "codes": []}
-{"id": "dev-025", "codes": []}
-{"id": "dev-026", "codes": []}
-{"id": "dev-027", "codes": []}
-{"id": "dev-028", "codes": []}
-{"id": "dev-029", "codes": []}
-{"id": "dev-030", "codes": []}
-{"id": "dev-031", "codes": []}
-{"id": "dev-032", "codes": []}
-{"id": "dev-033", "codes": []}
-{"id": "dev-034", "codes": []}
+{"id": "dev-008", "codes": ["1G05", "EA85.2Y"]}
+{"id": "dev-009", "codes": ["1B10.0", "1C60.0"]}
+{"id": "dev-010", "codes": ["CA03.0"]}
+{"id": "dev-011", "codes": ["1C62.0", "1C62.1"]}
+{"id": "dev-012", "codes": ["MF50.61", "1D42"]}
+{"id": "dev-013", "codes": ["CA22.0", "MD11.5", "CA81.2"]}
+{"id": "dev-014", "codes": ["1A40.Z", "KB8C", "KB86.Z"]}
+{"id": "dev-015", "codes": ["1F28.0"]}
+{"id": "dev-016", "codes": ["1B95", "SP56"]}
+{"id": "dev-017", "codes": ["SK99"]}
+{"id": "dev-018", "codes": ["SA56"]}
+{"id": "dev-019", "codes": ["1D80.0"]}
+{"id": "dev-020", "codes": ["CA42.1", "CA42.Z"]}
+{"id": "dev-021", "codes": ["DA42.1", "MD81.2", "DD91.3"]}
+{"id": "dev-022", "codes": ["GC08.2"]}
+{"id": "dev-023", "codes": ["FA01.0", "ME84.2Y", "ME85"]}
+{"id": "dev-024", "codes": ["EB00.0"]}
+{"id": "dev-025", "codes": ["GA34.3", "SB8Y"]}
+{"id": "dev-026", "codes": ["DA09.6Y", "SM11"]}
+{"id": "dev-027", "codes": ["GB51", "MF5Y", "MG31.Z"]}
+{"id": "dev-028", "codes": ["DA22.1", "MD95", "MD90.1"]}
+{"id": "dev-029", "codes": ["FB40.1", "5A14"]}
+{"id": "dev-030", "codes": ["ED80.2"]}
+{"id": "dev-031", "codes": ["SN3Z", "MF40.1"]}
+{"id": "dev-032", "codes": ["DB6Z", "ME24.A6"]}
+{"id": "dev-033", "codes": ["FA25.0"]}
+{"id": "dev-034", "codes": ["GA34.2Z", "HA2Z", "MD81.11"]}
 {"id": "dev-035", "codes": []}
-{"id": "dev-036", "codes": []}
-{"id": "dev-037", "codes": []}
-{"id": "dev-038", "codes": []}
-{"id": "dev-039", "codes": []}
-{"id": "dev-040", "codes": []}
-{"id": "dev-041", "codes": []}
-{"id": "dev-042", "codes": []}
-{"id": "dev-043", "codes": []}
-{"id": "dev-044", "codes": []}
+{"id": "dev-036", "codes": ["EK00.0"]}
+{"id": "dev-037", "codes": ["GC08.0"]}
+{"id": "dev-038", "codes": ["DD91.1"]}
+{"id": "dev-039", "codes": ["FB53.0"]}
+{"id": "dev-040", "codes": ["GA02.0"]}
+{"id": "dev-041", "codes": ["5A23"]}
+{"id": "dev-042", "codes": ["8A84.Y", "BA04.2"]}
+{"id": "dev-043", "codes": ["JA40.0", "JA40.Y"]}
+{"id": "dev-044", "codes": ["5A20.0"]}
 {"id": "dev-045", "codes": []}
-{"id": "dev-046", "codes": []}
-{"id": "dev-047", "codes": []}
-{"id": "dev-048", "codes": []}
-{"id": "dev-049", "codes": []}
-{"id": "dev-050", "codes": []}
-{"id": "dev-051", "codes": []}
-{"id": "dev-052", "codes": []}
-{"id": "dev-053", "codes": []}
-{"id": "dev-054", "codes": []}
-{"id": "dev-055", "codes": []}
-{"id": "dev-056", "codes": []}
-{"id": "dev-057", "codes": []}
-{"id": "dev-058", "codes": []}
-{"id": "dev-059", "codes": []}
-{"id": "dev-060", "codes": []}
+{"id": "dev-046", "codes": ["MA18.4"]}
+{"id": "dev-047", "codes": ["5A02.0", "5A00.2Y"]}
+{"id": "dev-048", "codes": ["8D61.Y", "8B1Y", "8B0Z"]}
+{"id": "dev-049", "codes": ["4A84.4", "4A84.0"]}
+{"id": "dev-050", "codes": ["BC81.30", "MC81.Y"]}
+{"id": "dev-051", "codes": ["SP92", "SB06.Z", "SR05"]}
+{"id": "dev-052", "codes": ["BD11.1", "MG43.8", "MC80.0Z"]}
+{"id": "dev-053", "codes": ["QA42.0", "QA43.Z"]}
+{"id": "dev-054", "codes": ["MA18.0Y", "5A40.0"]}
+{"id": "dev-055", "codes": ["BA40.1", "MC84"]}
+{"id": "dev-056", "codes": ["JA63.2", "JA63.0"]}
+{"id": "dev-057", "codes": ["5A00.20", "5A00.01", "5D40.0Y"]}
+{"id": "dev-058", "codes": ["SL0Y", "MA01.1"]}
+{"id": "dev-059", "codes": ["JA62.2", "GC00.3"]}
+{"id": "dev-060", "codes": ["5B81.Y", "MG43.6"]}

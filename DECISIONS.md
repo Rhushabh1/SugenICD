@@ -88,6 +88,13 @@ decision -> to implement hierarchy aware reranking, remove non-leaf parent categ
 alternative -> repeatedly adding prompt instructions to LLM isn't fixing small model's code-selection errors
 revisit -> when done with reranker optimizations
 
+[11/11/2026, 19:17]
+decision -> compare top 3 filtered RRF candidates against qwen's reranked top 3 using identical candidates for both, comparing it with fallback routine to create top 3 answers
+measurement -> record retrieval hit@k, final top1/top3, official dev score and LLM errors across all 60 notes
+alternative -> blindly enrich and add features without testing hybrid, LLM, fallback and how they contribute to the final predictions
+revisit -> use it to benchmark after enriching ICD data
+
+commit 7
 
 
 
