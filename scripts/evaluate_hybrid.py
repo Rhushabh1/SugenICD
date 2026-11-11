@@ -10,7 +10,7 @@ from src.retrieval.hybrid import search
 ROOT = Path(__file__).resolve().parent.parent
 
 NOTES_FILE = ROOT / "data" / "dev_notes.jsonl"
-MMS_FILE = ROOT / "data" / "mms-2026-01.json"
+MMS_FILE = ROOT / "data" / "mms-2026-01-enriched.json"
 
 
 # loading the dev notes

@@ -1,7 +1,10 @@
+import os
 import json
 import time
 # instead of http dependency
 import urllib.request
+
+from src.llm.config import get_model
 
 
 # single place where candidates are filtered before LLm sees them
@@ -47,21 +50,203 @@ def prepare_candidates(note, candidates, catalogue_by_code):
 	return filter_candidates(note, candidates)
 
 
+# openai helper call
+def call_openai(model, system_prompt, user_prompt, response_format):
+	body = {
+			"model": model,
+			"input": [{
+					"role": "system",
+					"content": system_prompt
+					},
+					{
+					"role": "user",
+					"content": user_prompt
+					}],
+			"text": {
+					"format": {
+							"type": "json_schema",
+							"name": "icd_codes",
+							"strict": True,
+							"schema": {
+									"type": "object",
+									"properties": {
+												"codes": {
+														"type": "array",
+														"items": {
+																"type": "string",
+																"enum": response_format["properties"]["codes"]["items"]["enum"]
+																},
+														"maxItems": 3
+														}
+												},
+									"required": ["codes"],
+									"additionalProperties": False
+									}
+							}
+					},
+			"max_output_tokens": 100,
+			"reasoning": {
+						"effort": "none"
+						}
+			}
+
+	request = urllib.request.Request("https://api.openai.com/v1/responses",
+									data=json.dumps(body).encode("utf-8"),
+									headers={
+											"Content-Type": "application/json",
+											"Authorization": "Bearer " + os.getenv("OPENAI_API_KEY")
+											})
+
+	start_time = time.time()
+
+	with urllib.request.urlopen(request, timeout=120) as response:
+		result = json.loads(response.read().decode("utf-8"))
+
+	content = result.get("output_text", "")
+
+	if not content:
+		for item in result.get("output", []):
+			for part in item.get("content", []):
+				if part.get("type") == "output_text":
+					content = part["text"]
+					break
+
+	print("OpenAI time:", round(time.time() - start_time, 2), "sec")
+	print("OpenAI usage:", result.get("usage", {}))
+
+	return content
+
+
+# anthropic helper call
+def call_anthropic(model, system_prompt, user_prompt, response_format):
+	schema = {
+			"type": "object",
+			"properties": {
+						"codes": {
+								"type": "array",
+								"items": {
+										"type": "string",
+										"enum": response_format["properties"]["codes"]["items"]["enum"]
+										}
+								}
+						},
+			"required": ["codes"],
+			"additionalProperties": False
+			}
+
+	body = {
+			"model": model,
+			"max_tokens": 100,
+			"system": system_prompt,
+			"messages": [{
+						"role": "user",
+						"content": user_prompt
+						}],
+			"output_config": {
+							"format": {
+									"type": "json_schema",
+									"schema": schema
+									}
+							}
+			}
+
+	request = urllib.request.Request("https://api.anthropic.com/v1/messages",
+									data=json.dumps(body).encode("utf-8"),
+									headers={
+											"Content-Type": "application/json",
+											"x-api-key": os.getenv("ANTHROPIC_API_KEY"),
+											"anthropic-version": "2023-06-01"
+											})
+
+	start_time = time.time()
+
+	with urllib.request.urlopen(request, timeout=120) as response:
+		result = json.loads(response.read().decode("utf-8"))
+
+	content = ""
+
+	for block in result.get("content", []):
+		if block.get("type") == "text":
+			content = block["text"]
+			break
+
+	print("Anthropic time:", round(time.time() - start_time, 2), "sec")
+	print("Anthropic usage:", result.get("usage", {}))
+
+	return content
+
+
+# migrated ollama helper call
+def call_ollama(model, system_prompt, user_prompt, response_format):
+	body = {
+			"model": model,
+			"messages": [{
+						"role": "system",
+						"content": system_prompt
+						},
+						{
+						"role": "user",
+						"content": user_prompt
+						}],
+			# "format": "json",
+			"format": response_format,
+			"think": False,
+			"stream": False,
+			# keep model loaded between notes instead of unloading
+			"keep_alive": "30m",
+			"options": {
+						# no randomness -> need higher recall
+						"temperature": 0,
+						# number of tokens generated (codes + short reason)
+						"num_predict": 40,
+						# limits context allocation
+						"num_ctx": 2048
+						}
+			}
+
+	# API request for ollama
+	request = urllib.request.Request("http://localhost:11434/api/chat",
+										data = json.dumps(body).encode("utf-8"),
+										headers = {"Content-Type": "application/json"})
+
+	start_time = time.time()
+
+	# send & receive response block
+	with urllib.request.urlopen(request, timeout=120) as response:
+		result = json.loads(response.read().decode("utf-8"))
+
+	# parsing explicit json format
+	content = result["message"]["content"].strip()
+
+	# for LLM processing time diagnosis
+	print("Ollama time:", round(time.time() - start_time, 2), "sec")
+	print("Ollama load duration:", round(result.get("load_duration", 0) / 1e9, 2), "sec")
+	print("Ollama prompt tokens:", result.get("prompt_eval_count", 0))
+	print("Ollama generated tokens:", result.get("eval_count", 0))
+
+	return content
+
+
+
 # LLM reranking function (assumes candidates are already prepared)
-def rerank(note, candidates, model = "qwen3:1.7b"):
+def rerank(note, candidates, model = None, provider = "ollama"):
+	if provider not in ["ollama", "openai", "anthropic"]:
+		raise ValueError(f"Provider not implemented yet: {provider}")
+
+	if model is None:
+		model = get_model(provider)
+
 	candidate_list = []
 
 	# # extract all the relevant LLM info
 	for candidate in candidates:
-		candidate_list.append({
-							"code": candidate["code"],
-							"title": candidate["title"],
-							"parent_code": candidate.get("parent_code"),
+		candidate_list.append(candidate["code"] + ": " + candidate["title"])
+							# "parent_code": candidate.get("parent_code"),
 							# "leaf": candidate.get("leaf"),
 							# LLM misinterpreting residual flag as a clinical finding
 							# "residual": candidate.get("residual"),
 							# "depth": candidate.get("depth")
-							})
+							# })
 
 	candidate_codes = [candidate["code"] for candidate in candidates]
 
@@ -124,58 +309,19 @@ CLINICAL NOTE:
 {note}
 
 AVAILABLE ICD-11 CANDIDATE CODES:
-{json.dumps(candidate_list, ensure_ascii = False)}
+{json.dumps(candidate_list, ensure_ascii = False, separators = (",", ":"))}
 
 Select the best supported codes from these candidates.
 """
 
-	body = {
-			"model": model,
-			"messages": [{
-						"role": "system",
-						"content": SYSTEM_PROMPT
-						},
-						{
-						"role": "user",
-						"content": USER_PROMPT
-						}],
-			# "format": "json",
-			"format": response_format,
-			"think": False,
-			"stream": False,
-			# keep model loaded between notes instead of unloading
-			"keep_alive": "30m",
-			"options": {
-						# no randomness -> need higher recall
-						"temperature": 0,
-						# number of tokens generated (codes + short reason)
-						"num_predict": 40,
-						# limits context allocation
-						"num_ctx": 2048
-						}
-			}
+	if provider == "ollama":
+		content = call_ollama(model, SYSTEM_PROMPT, USER_PROMPT, response_format)
 
-	start_time = time.time()
+	elif provider == "openai":
+		content = call_openai(model, SYSTEM_PROMPT, USER_PROMPT, response_format)
 
-	# API request for ollama
-	request = urllib.request.Request("http://localhost:11434/api/chat",
-									data = json.dumps(body).encode("utf-8"),
-									headers = {"Content-Type": "application/json"})
-
-	# send & receive response block
-	with urllib.request.urlopen(request, timeout = 180) as response:
-		result = json.loads(response.read().decode("utf-8"))
-
-	# for LLM processing time diagnosis
-	print("LLM time:", round(time.time() - start_time, 2), "sec")
-	print("Model load:", round(result["load_duration"] / 1e9, 2), "sec")
-	print("Prompt processing:", round(result["prompt_eval_duration"] / 1e9, 2), "sec")
-	print("Answer generation:", round(result["eval_duration"] / 1e9, 2), "sec")
-	print("Prompt tokens:", result["prompt_eval_count"])
-	print("Generated tokens:", result["eval_count"])
-
-	# parsing explicit json format
-	content = result["message"]["content"].strip()
+	elif provider == "anthropic":
+		content = call_anthropic(model, SYSTEM_PROMPT, USER_PROMPT, response_format)
 
 	if not content:
 		print("Ollama returned empty response")

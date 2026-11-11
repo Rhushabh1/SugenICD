@@ -111,11 +111,51 @@ decision -> enrich ICD MMS catalogue using WHO data, including terms and definit
 alternative -> continue retrieving using category titles alone
 revisit -> evaluate improvement in retrieval hit@k and final top1/top3 accuracy
 
+commit 8
+
 [11/11/2026, 00:40]
 decision -> enriched json is tested for lexical analysis against the hybrid baseline of hit@50 = 73.33%
 measurement -> enriched lexical index achieved Hit@1 35.00%, Hit@3 51.67%, Hit@5 53.33%, Hit@10 56.67% and Hit@20 66.67% on 60 notes. compared with the original catalogue, Hit@20 improved from 51.67% to 66.67%
 
-commit 8
+[11/11/2026, 01:14]
+decision -> tested hybrid retrieval with enriched mms file. RRF remains strong across hit@3,10,20 whereas combSUM and weighted RRF lose more and gain marginally
+measurement -> enriched RRF achieved Hit@1 28.33%, Hit@3 50.00%, Hit@5 56.67%, Hit@10 70.00%, Hit@20 78.33% and Hit@50 88.33% on 60 development notes. compared with the original RRF baseline, Hit@50 improved from 73.33% to 88.33%. RRF achieved Hit@10 70.00%, Hit@20 78.33% and Hit@50 88.33%. combSUM achieved slightly higher Hit@50 at 90.00%, while weighted RRF achieved the best Hit@1 at 31.67%
 
+[11/11/2026, 01:48]
+decision -> not passing enriched metadata to LLM
+measurement -> the accuracy collapsed from 30% LLM misses to 100% LLM misses after passing WHO metadata to it
+revisit -> when noisy associations won't hurt LLM reranking
 
+[11/11/2026, 02:14]
+decision -> adopting weighted RRF (0.3 retrieval + 0.7 LLM, k = 60) as experimental ranking strategy
+measurement -> top1 improved from 61 to 69% and top3 remained unchanged for a small test sample of 13 notes
+alternative -> use LLM ranking alone or retain existing operational fallback strategy (trusting LLM too much and filling gaps with retrieval)
+revisit -> validate once testing it on all 60 notes before finalizing the weights
+
+[11/11/2026, 03:07]
+decision -> reduce hybrid candidates from 50 to 30 and compact the LLM prompt
+measurement -> processing time decreased from 25-30sec to under 10sec per note, fused score reached 35/75 (highest yet)
+issue -> 10/60 LLM responses failed json prsing after reducing num_predict to 25
+revisit -> increase generation tokens to 40 and validate parsing reliability
+
+[11/11/2026, 03:24]
+decision -> freezing current 30-candidate hybrid retrieval + qwen3:1.7b reranking + weighted RRF (0.3 retrieval + 0.7 LLM) for now and working on final submission format and API keys
+measurement -> new best fused score of 39.6/75, no LLM errors
+alternative -> keep benchmarking and experimenting with strategies without a proper final submission package handy
+revisit -> once the final submission package is working and able to reproduce the same results in docker commands
+
+[11/11/2026, 03:29]
+decision -> provider behaviour -> (auto, ollama, openai, anthropic, offline) to set up easy test deployment and development env
+alternative -> manually change variables to switch from one mode to another
+revisit -> no (best portable option)
+
+[11/11/2026, 04:00]
+decision -> added openai & anthropic message PAI with structured json output, sharing existing prompt and candidate validation with ollama
+alternative -> use prompt-only json generation or maintain separate reranking logic for each provider
+revisit -> compare accuracy, latency and API cost on same dev notes when grading compatible API cred are available
+
+[11/11/2026, 04:32]
+decision -> selected gpt-6-luna and claude-haiku-5-5 as low-cost API model candidates for testing, with one provider selected per run
+alternative -> use more expensive models or call both providers for every note
+measurement -> current published standard rates show USD 0.1/M input and 0.5/M output tokens, actual workload cost may differ
 

@@ -9,7 +9,7 @@ def load_jsonl(file_path):
 
 def main():
 	notes = load_jsonl(Path("data/dev_notes.jsonl"))
-	details = load_jsonl(Path("out/llm_details.jsonl"))
+	details = load_jsonl(Path("out/3_llm_details.jsonl"))
 
 	gold_notes = {
 		note["id"]: set(note["gold"])

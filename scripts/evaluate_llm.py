@@ -5,6 +5,7 @@ from src.retrieval.lexical import build_index as build_lexical_index
 from src.retrieval.semantic import build_index as build_semantic_index
 from src.retrieval.hybrid import search as hybrid_search
 from src.reranking.llm import rerank, prepare_candidates
+from src.reranking.fusion import fuse_candidates
 
 
 # calculate hit@k for the given results & truth values = gold_notes
@@ -35,7 +36,7 @@ def calculate_metrics(results, gold_notes):
 def main():
 	# input files extracted
 	data_file = Path("data/dev_notes.jsonl")
-	mms_file = Path("data/mms-2026-01.json")
+	mms_file = Path("data/mms-2026-01-enriched.json")
 	
 	# to validate output directory
 	output_dir = Path("out")
@@ -68,13 +69,16 @@ def main():
 	llm_results = []
 	fallback_results = []
 	llm_errors = []
+	fused_results = []
 
 	# saved in following output files
-	hybrid_file = open(output_dir / "2_hybrid_predictions.jsonl", "w", encoding = "utf-8")
-	llm_file = open(output_dir / "2_llm_predictions.jsonl", "w", encoding = "utf-8")
-	fallback_file = open(output_dir / "2_llm_fallback_predictions.jsonl", "w", encoding = "utf-8")
-	details_file = open(output_dir / "2_llm_details.jsonl", "w", encoding = "utf-8")
-	errors_file = open(output_dir / "2_llm_errors.jsonl", "w", encoding = "utf-8")
+	hybrid_file = open(output_dir / "3_hybrid_predictions.jsonl", "w", encoding = "utf-8")
+	llm_file = open(output_dir / "3_llm_predictions.jsonl", "w", encoding = "utf-8")
+	fallback_file = open(output_dir / "3_llm_fallback_predictions.jsonl", "w", encoding = "utf-8")
+	details_file = open(output_dir / "3_llm_details.jsonl", "w", encoding = "utf-8")
+	errors_file = open(output_dir / "3_llm_errors.jsonl", "w", encoding = "utf-8")
+	# weighted RRF to replace fallback strategy
+	fused_file = open(output_dir / "3_llm_fused_predictions.jsonl", "w", encoding="utf-8")
 
 	try:
 		for i, note in enumerate(notes, start = 1):
@@ -85,7 +89,7 @@ def main():
 			print(f"\nProcessing {i}/{len(notes)}: {note_id}")
 
 			# retrieve the top 50 hybrid candidates
-			candidates = hybrid_search(original_text, lexical_conn, parents, model, catalogue, embeddings, limit=50, method="rrf")
+			candidates = hybrid_search(original_text, lexical_conn, parents, model, catalogue, embeddings, limit=30, method="rrf")
 
 			retrieval_results.append({
 									"id": note_id,
@@ -114,6 +118,7 @@ def main():
 			raw_response = ""
 			raw_codes = []
 			invalid_codes = []
+			fused_codes = []
 			error = ""
 
 			try:
@@ -125,6 +130,7 @@ def main():
 				raw_response = result["raw_response"]
 				raw_codes = result["raw_codes"]
 				invalid_codes = result["invalid_codes"]
+				fused_codes = fuse_candidates(filtered_candidates, llm_codes, retrieval_weight=0.3, llm_weight=0.7, k=60)
 
 				if not llm_codes:
 					error = "LLM returned no valid codes"
@@ -132,11 +138,17 @@ def main():
 			except Exception as e:
 				error = str(e)
 				print(f"LLM error: {error}")
+				fused_codes = [candidate["code"] for candidate in filtered_candidates[:3]]
 
 			# pure LLM result, without fallback
 			llm_results.append({
 								"id": note_id,
 								"codes": llm_codes
+								})
+
+			fused_results.append({
+								"id": note_id,
+								"codes": fused_codes
 								})
 
 			# proper operational fallback ->
@@ -159,6 +171,7 @@ def main():
 			hybrid_file.write(json.dumps(hybrid_results[-1]) + "\n")
 			llm_file.write(json.dumps(llm_results[-1]) + "\n")
 			fallback_file.write(json.dumps(fallback_results[-1]) + "\n")
+			fused_file.write(json.dumps(fused_results[-1], ensure_ascii = False) + "\n")
 
 			# save candidate details and the raw LLM response (in proper execution sequence)
 			details = {
@@ -194,11 +207,13 @@ def main():
 			fallback_file.flush()
 			details_file.flush()
 			errors_file.flush()
+			fused_file.flush()
 
 			# for CLI & logging
 			print("Hybrid: ", hybrid_codes)
 			print("LLM: ", llm_codes)
 			print("Fallback: ", fallback_codes)
+			print("Fused: ", fused_codes)
 
 	finally:
 		# closing all files and connections
@@ -207,6 +222,7 @@ def main():
 		fallback_file.close()
 		details_file.close()
 		errors_file.close()
+		fused_file.close()
 		lexical_conn.close()
 
 	# calculate metrics using the results already collected
@@ -216,12 +232,13 @@ def main():
 				"hybrid_top_3": calculate_metrics(hybrid_results, gold_notes),
 				"llm_only": calculate_metrics(llm_results, gold_notes),
 				"llm_with_fallback": calculate_metrics(fallback_results, gold_notes),
+				"llm_fused": calculate_metrics(fused_results, gold_notes),
 				"llm_error_count": len(llm_errors),
 				"total_notes": len(notes)
 				}
 
 	# final benchmark file
-	with open(output_dir / "2_benchmark_results.json", "w", encoding = "utf-8") as file:
+	with open(output_dir / "3_benchmark_results.json", "w", encoding = "utf-8") as file:
 		json.dump(metrics, file, indent=4)
 
 	print("\nBenchmark completed")
