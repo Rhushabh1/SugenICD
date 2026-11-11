@@ -1,11 +1,10 @@
 import json
 from pathlib import Path
 
-from src.preprocessing.normalize import normalize_text
 from src.retrieval.lexical import build_index as build_lexical_index
 from src.retrieval.semantic import build_index as build_semantic_index
 from src.retrieval.hybrid import search as hybrid_search
-from src.reranking.llm import rerank, filter_candidates
+from src.reranking.llm import rerank, prepare_candidates
 
 
 # calculate hit@k for the given results & truth values = gold_notes
@@ -71,11 +70,11 @@ def main():
 	llm_errors = []
 
 	# saved in following output files
-	hybrid_file = open(output_dir / "hybrid_predictions.jsonl", "w", encoding = "utf-8")
-	llm_file = open(output_dir / "llm_predictions.jsonl", "w", encoding = "utf-8")
-	fallback_file = open(output_dir / "llm_fallback_predictions.jsonl", "w", encoding = "utf-8")
-	details_file = open(output_dir / "llm_details.jsonl", "w", encoding = "utf-8")
-	errors_file = open(output_dir / "llm_errors.jsonl", "w", encoding = "utf-8")
+	hybrid_file = open(output_dir / "2_hybrid_predictions.jsonl", "w", encoding = "utf-8")
+	llm_file = open(output_dir / "2_llm_predictions.jsonl", "w", encoding = "utf-8")
+	fallback_file = open(output_dir / "2_llm_fallback_predictions.jsonl", "w", encoding = "utf-8")
+	details_file = open(output_dir / "2_llm_details.jsonl", "w", encoding = "utf-8")
+	errors_file = open(output_dir / "2_llm_errors.jsonl", "w", encoding = "utf-8")
 
 	try:
 		for i, note in enumerate(notes, start = 1):
@@ -85,26 +84,16 @@ def main():
 			# show progress log
 			print(f"\nProcessing {i}/{len(notes)}: {note_id}")
 
-			# normalize note for retrieval
-			normalized_text = normalize_text(original_text)
 			# retrieve the top 50 hybrid candidates
-			candidates = hybrid_search(normalized_text, lexical_conn, parents, model, catalogue, embeddings, limit=50, method="rrf")
+			candidates = hybrid_search(original_text, lexical_conn, parents, model, catalogue, embeddings, limit=50, method="rrf")
 
 			retrieval_results.append({
 									"id": note_id,
 									"codes": [candidate["code"] for candidate in candidates]
 									})
 
-			# add leaf information before applying the same filter
-			# used by the LLM reranker
-			for candidate in candidates:
-				entry = catalogue_by_code.get(candidate["code"])
-
-				if entry:
-					candidate["leaf"] = entry["leaf"]
-
 			# filtered right before LLM reranker is called (filtering out non-leaf codes and specific keywords)
-			filtered_candidates = filter_candidates(original_text, candidates)
+			filtered_candidates = prepare_candidates(original_text, candidates, catalogue_by_code)
 
 			# baseline preds -> first three filtered candidates
 			hybrid_codes = [candidate["code"] for candidate in filtered_candidates[:3]]
@@ -121,7 +110,7 @@ def main():
 
 			# initializing before try block
 			llm_codes = []
-			reason = ""
+			# reason = ""
 			raw_response = ""
 			raw_codes = []
 			invalid_codes = []
@@ -129,10 +118,10 @@ def main():
 
 			try:
 				# keep normalized text only for retrieval, not LLM reranker
-				result = rerank(original_text, candidates, catalogue_by_code, model="qwen3:1.7b")
+				result = rerank(original_text, filtered_candidates, model="qwen3:1.7b")
 
 				llm_codes = result["codes"]
-				reason = result["reason"]
+				# reason = result["reason"]
 				raw_response = result["raw_response"]
 				raw_codes = result["raw_codes"]
 				invalid_codes = result["invalid_codes"]
@@ -182,7 +171,7 @@ def main():
 						"llm_codes": llm_codes,
 						"raw_codes": raw_codes,
 						"invalid_codes": invalid_codes,
-						"reason": reason,
+						# "reason": reason,
 						"raw_response": raw_response
 						}
 
@@ -232,7 +221,7 @@ def main():
 				}
 
 	# final benchmark file
-	with open(output_dir / "benchmark_results.json", "w", encoding = "utf-8") as file:
+	with open(output_dir / "2_benchmark_results.json", "w", encoding = "utf-8") as file:
 		json.dump(metrics, file, indent=4)
 
 	print("\nBenchmark completed")

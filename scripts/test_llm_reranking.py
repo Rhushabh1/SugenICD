@@ -5,7 +5,7 @@ from pathlib import Path
 from src.retrieval.lexical import build_index as build_lexical_index
 from src.retrieval.semantic import build_index as build_semantic_index
 from src.retrieval.hybrid import search as hybrid_search
-from src.reranking.llm import rerank, filter_candidates
+from src.reranking.llm import rerank, prepare_candidates
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -14,13 +14,15 @@ NOTES_FILE = ROOT / "data" / "dev_notes.jsonl"
 MMS_FILE = ROOT / "data" / "mms-2026-01.json"
 
 
-# loading the first dev note
+notes = []
 with open(NOTES_FILE, "r", encoding = "utf-8") as file:
-	# for line in file:
-	# 	if line.strip():
-	# 		notes.append(json.loads(line))
-	note = json.loads(file.readline())
+	for line in file:
+		if line.strip():
+			notes.append(json.loads(line))
+	# note = json.loads(file.readline())
 
+# testing specific note
+note = notes[6]
 
 # build both retrieval indexes
 print("Building lexical index...")
@@ -44,13 +46,6 @@ print(f"Candidates retrieved: {len(candidates)}")
 # inspecting malaria candidates
 catalogue_by_code = {entry["code"]: entry for entry in catalogue}
 
-# add catalogue metadata to retrieved candidates
-for candidate in candidates:
-	entry = catalogue_by_code[candidate["code"]]
-	candidate["leaf"] = entry["leaf"]
-
-
-
 # inspect whether the gold code was retrieved
 gold_codes = set(note["gold"])
 candidate_codes = [candidate["code"] for candidate in candidates]
@@ -59,25 +54,26 @@ print("\nGold codes:", gold_codes)
 print("Gold retrieved:", gold_codes.intersection(candidate_codes))
 
 # inspect the candidates passed through the filter
-filtered_candidates = filter_candidates(note["text"], candidates)
+filtered_candidates = prepare_candidates(note["text"], candidates, catalogue_by_code)
 filtered_codes = [candidate["code"] for candidate in filtered_candidates]
 
 print("\nGold codes after filtering:", gold_codes.intersection(filtered_codes))
+print("\nFiltered codes:", filtered_codes)
 
-print("\nRelevant malaria candidates:")
-for candidate in candidates:
-	if candidate["code"].startswith(("1F40", "1F41")):
-		print(f"{candidate["code"]} | leaf: {candidate["leaf"]} | {candidate["title"]} | passed filter: {[candidate["code"] in filtered_codes]}")
+# print("\nRelevant malaria candidates:")
+# for candidate in filtered_candidates:
+# 	if candidate["code"].startswith(("1F40", "1F41")):
+# 		print(f"{candidate["code"]} | leaf: {candidate["leaf"]} | {candidate["title"]}")
 
 
 # run LLM reranker
 print("\nRunning qwen3:1.7b reranking...")
-result = rerank(note["text"], candidates, catalogue_by_code, model = "qwen3:1.7b")
+result = rerank(note["text"], filtered_candidates, model = "qwen3:1.7b")
 
 # show note prediction stats
 print(f"\nNote: {note["text"]}")
 print(f"\nSelected codes: {result["codes"]}")
-print(f"\nReason: {result["reason"]}")
+# print(f"\nReason: {result["reason"]}")
 print(f"\nGold codes: {note["gold"]}")
 
 # evaluate this note

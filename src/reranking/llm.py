@@ -1,4 +1,5 @@
 import json
+import time
 # instead of http dependency
 import urllib.request
 
@@ -33,16 +34,21 @@ def filter_candidates(note, candidates):
 	return filtered_candidates
 
 
-# LLM reranking function
-def rerank(note, candidates, catalogue_by_code, model = "qwen3:1.7b"):
-	# add leaf metadata
+# prepare candidates with metadata and filtering before LLM reranking
+def prepare_candidates(note, candidates, catalogue_by_code):
+	# add leaf metadata from ICD catalogue
 	for candidate in candidates:
 		entry = catalogue_by_code.get(candidate["code"])
+
 		if entry:
 			candidate["leaf"] = entry["leaf"]
 
-	# basic leaf node and keyword filtering
-	candidates = filter_candidates(note, candidates)
+	# apply common candidate filters
+	return filter_candidates(note, candidates)
+
+
+# LLM reranking function (assumes candidates are already prepared)
+def rerank(note, candidates, model = "qwen3:1.7b"):
 	candidate_list = []
 
 	# # extract all the relevant LLM info
@@ -50,64 +56,106 @@ def rerank(note, candidates, catalogue_by_code, model = "qwen3:1.7b"):
 		candidate_list.append({
 							"code": candidate["code"],
 							"title": candidate["title"],
-							# "parent_code": candidate.get("parent_code"),
+							"parent_code": candidate.get("parent_code"),
 							# "leaf": candidate.get("leaf"),
 							# LLM misinterpreting residual flag as a clinical finding
 							# "residual": candidate.get("residual"),
 							# "depth": candidate.get("depth")
 							})
 
+	candidate_codes = [candidate["code"] for candidate in candidates]
+
+	if not candidate_codes:
+		return {
+				"codes": [],
+				# "reason": "",
+				"raw_response": "",
+				"raw_codes": [],
+				"invalid_codes": [],
+				"candidate_codes": [],
+				"candidate_details": []
+				}
+
+	# constrained candidate codes -> to prevent hallucinations, duplicates, malformed jsons
+	response_format = {
+					"type": "object",
+					"properties": {
+								"codes": {
+										"type": "array",
+										"items": {
+												"type": "string",
+												"enum": candidate_codes
+												},
+										"maxItems": 3,
+										"uniqueItems": True
+										},
+								# "reason": {
+								# 		"type": "string"
+								# 		}
+								},
+					"required": ["codes"],
+					"additionalProperties": False
+					}
+
 	# prompt construction
-	PROMPT = f"""
+	SYSTEM_PROMPT = """
 You are an ICD-11 clinical coding assistant.
 Select the most appropriate ICD-11 diagnosis codes for the clinical note.
 
+RULES:
+- Select codes only from the supplied candidates.
+- Select only terminal diagnosis categories.
+- Choose the most specific diagnosis supported by the note.
+- Do not infer severity, complications, causes, organisms or subtypes.
+- If specific details are absent, prefer an appropriate unspecified category.
+- Do not select codes that contradict the note.
+- Return at most 3 distinct codes, ordered by relevance.
+- Return an empty list if no candidate is supported.
+- Never invent or modify ICD-11 codes.
+
+Return only valid JSON in this format:
+{{
+	"codes": ["CODE1", "CODE2"],
+}}
+"""
+	
+	USER_PROMPT = f"""
 CLINICAL NOTE:
 {note}
 
 AVAILABLE ICD-11 CANDIDATE CODES:
 {json.dumps(candidate_list, ensure_ascii = False)}
 
-Instructions:
-- Select codes only from the supplied candidates
-- Only select terminal diagnosis categories (leaf categories)
-- Choose the most specific diagnosis supported by the clinical note
-- Do not select a code if its description contradicts the clinical note
-- Do not infer complications, severity or other clinical details that are not documented
-- If a more specific child requires details that are absent from the note, select the appropriate unspecified (.Z) category when available
-- Do not confuse unspecified categories with other residual categories. Read their complete descriptions carefully
-- Return at most 3 distinct codes, ordered from most to least appropriate
-- If no candidate is supported, return an empty list
-- Do not invent or modify ICD-11 codes
-
-Before selecting codes, check each candidate against the clinical note:
-- Is its diagnosis supported?
-- Does its description contradict any documented finding?
-- Does it require clinical details that are absent?
-- Is there a more specific supported candidate?
-
-Return only valid JSON in this format:
-{{
-	"codes": ["CODE1", "CODE2"],
-	"reason": "Brief explanation"
-}}
+Select the best supported codes from these candidates.
 """
 
 	body = {
 			"model": model,
 			"messages": [{
+						"role": "system",
+						"content": SYSTEM_PROMPT
+						},
+						{
 						"role": "user",
-						"content": PROMPT
+						"content": USER_PROMPT
 						}],
-			"format": "json",
+			# "format": "json",
+			"format": response_format,
 			"think": False,
 			"stream": False,
+			# keep model loaded between notes instead of unloading
+			"keep_alive": "30m",
 			"options": {
 						# no randomness -> need higher recall
 						"temperature": 0,
-						"num_predict": 200
+						# number of tokens generated (codes + short reason)
+						"num_predict": 40,
+						# limits context allocation
+						"num_ctx": 2048
 						}
 			}
+
+	start_time = time.time()
 
 	# API request for ollama
 	request = urllib.request.Request("http://localhost:11434/api/chat",
@@ -118,6 +166,14 @@ Return only valid JSON in this format:
 	with urllib.request.urlopen(request, timeout = 180) as response:
 		result = json.loads(response.read().decode("utf-8"))
 
+	# for LLM processing time diagnosis
+	print("LLM time:", round(time.time() - start_time, 2), "sec")
+	print("Model load:", round(result["load_duration"] / 1e9, 2), "sec")
+	print("Prompt processing:", round(result["prompt_eval_duration"] / 1e9, 2), "sec")
+	print("Answer generation:", round(result["eval_duration"] / 1e9, 2), "sec")
+	print("Prompt tokens:", result["prompt_eval_count"])
+	print("Generated tokens:", result["eval_count"])
+
 	# parsing explicit json format
 	content = result["message"]["content"].strip()
 
@@ -125,7 +181,7 @@ Return only valid JSON in this format:
 		print("Ollama returned empty response")
 		return {
 				"codes": [],
-				"reason": "",
+				# "reason": "",
 				# for error analysis
 				"raw_response": "",
 				# codes originally returned
@@ -143,7 +199,7 @@ Return only valid JSON in this format:
 	output = json.loads(content)
 
 	# validate codes against retrieved candidates
-	valid_codes = {candidate["code"] for candidate in candidates if candidate["leaf"]}
+	valid_codes = {candidate["code"] for candidate in candidates}
 
 	# extract top 3 codes from output
 	selected_codes = []
@@ -161,7 +217,7 @@ Return only valid JSON in this format:
 
 	return {
 			"codes": selected_codes,
-			"reason": output.get("reason", ""),
+			# "reason": output.get("reason", ""),
 			"raw_response": content,
 			"raw_codes": raw_codes,
 			"invalid_codes": invalid_codes,

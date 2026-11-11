@@ -90,12 +90,32 @@ revisit -> when done with reranker optimizations
 
 [11/11/2026, 19:17]
 decision -> compare top 3 filtered RRF candidates against qwen's reranked top 3 using identical candidates for both, comparing it with fallback routine to create top 3 answers
-measurement -> record retrieval hit@k, final top1/top3, official dev score and LLM errors across all 60 notes
+measurement -> record retrieval hit@k, final top1/top3, official dev score and LLM errors across all 60 notes. hybrid retrieval scored 20.4/75, LLM reranking scored 31.2/75, and LLM with hybrid fallback scored 32.9/75. top1 accuracy improved from 21.67% to 40.00%.
 alternative -> blindly enrich and add features without testing hybrid, LLM, fallback and how they contribute to the final predictions
 revisit -> use it to benchmark after enriching ICD data
 
 commit 7
 
+[11/11/2026, 20:47]
+decision -> using a shared candidate preparation function to attach ICD catalogue metadata and apply leaf node and keyword filtering before LLM, retrieval handle normalization
+alternative -> perform metadata enrichment, normalization, filtering independently, keep filtering inside LLM reranker
+revisit -> if additional filtering or metadata introduced
+
+[11/11/2026, 20:53]
+decision -> constrain LLM output to candidate codes only (no hallucinations or invalid codes), improve prompt's specificity rules (wrong sibling and overly specific codes), no reason needed (shorten the llm time)
+measurement -> current LLM achieved 40.00% top1 and 55.00% top3 accuracy, scoring 33.8/75. with hybrid fallback, the score increased to 34.2/75 and top3 accuracy to 56.67%. no LLM errors occurred. this is the best result among the tested configs
+revisit -> improve candidate recall and clinical specificity using enriched WHO terms, then evaluate retrieval and reranking independently
+
+[11/11/2026, 22:26]
+decision -> enrich ICD MMS catalogue using WHO data, including terms and definitions
+alternative -> continue retrieving using category titles alone
+revisit -> evaluate improvement in retrieval hit@k and final top1/top3 accuracy
+
+[11/11/2026, 00:40]
+decision -> enriched json is tested for lexical analysis against the hybrid baseline of hit@50 = 73.33%
+measurement -> enriched lexical index achieved Hit@1 35.00%, Hit@3 51.67%, Hit@5 53.33%, Hit@10 56.67% and Hit@20 66.67% on 60 notes. compared with the original catalogue, Hit@20 improved from 51.67% to 66.67%
+
+commit 8
 
 
 

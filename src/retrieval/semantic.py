@@ -2,8 +2,9 @@
 import json
 import numpy as np 
 from pathlib import Path
-
 from fastembed import TextEmbedding
+
+from src.preprocessing.normalize import normalize_text
 
 
 # load catalogue and generate embeddings for all category titles
@@ -68,6 +69,8 @@ def build_index(mms_file):
 
 # find categories with closest embeddings to the note
 def search(note, model, catalogue, embeddings, parents, limit = 20):
+	note = normalize_text(note)
+
 	# embed() takes list of queries
 	query_embedding = np.array(list(model.embed([note]))[0], dtype = "float32")
 

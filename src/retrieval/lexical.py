@@ -34,12 +34,35 @@ def build_index(mms_file):
 				CREATE VIRTUAL TABLE categories USING fts5(
 					code UNINDEXED,
 					title,
+					fully_specified_name,
+					index_terms,
+					inclusion_terms,
+					definitions,
+					coding_notes,
 					tokenize = "unicode61"
 				)
 				""")
 
-	rows = [(entry["code"], entry["title"]) for entry in catalogue]
-	conn.executemany("INSERT INTO categories (code, title) VALUES (?, ?)",
+	# rows = [(entry["code"], entry["title"]) for entry in catalogue]
+	rows = []
+
+	for entry in catalogue:
+		rows.append((entry["code"], 
+					entry["title"], 
+					"|".join(entry.get("fully_specified_name", [])),
+					"|".join(entry.get("index_terms", [])),
+					"|".join(entry.get("inclusion_terms", [])),
+					" ".join(entry.get("definitions", [])),
+					" ".join(entry.get("coding_notes", [])),
+					))
+
+	conn.executemany("""
+					INSERT INTO categories (
+											code, title, fully_specified_name,
+											index_terms, inclusion_terms, 
+											definitions, coding_notes 
+											) 
+					VALUES (?, ?, ?, ?, ?, ?, ?)""",
 					rows)
 	conn.commit()
 
@@ -99,24 +122,38 @@ def search(note, conn, parents, limit = 20):
 
 	# bm25 score -> lower is better
 	rows = conn.execute("""
-						SELECT code, title, bm25(categories)
+						SELECT code, title, bm25(categories, 0.0, 5.0, 3.0, 3.0, 2.5, 0.5, 1.0), fully_specified_name, index_terms, inclusion_terms
 						FROM categories
 						WHERE categories MATCH ?
-						ORDER BY bm25(categories)
+						ORDER BY bm25(categories, 0.0, 5.0, 3.0, 3.0, 2.5, 0.5, 1.0)
 						LIMIT ?
 						""", (query, limit)).fetchall()
 
 	results = []
-	for code, title, score in rows:
-		norm_title = normalize_text(title)
-		
+	for code, title, score, full_name, index_terms, inclusion_terms in rows:
+		searchable_phrases = [title]
+
+		for field in [full_name, index_terms, inclusion_terms]:
+			if field:
+				searchable_phrases.extend(field.split("|"))
+
+		# check exact matches in category terminology
+		exact_match = False
+
+		for phrase in searchable_phrases:
+			phrase = normalize_text(phrase.strip())
+	
+			if len(phrase) > 2 and phrase in text:
+				exact_match = True
+				break
+
 		# not using parent-child relationship to change predictions
 		results.append({
 						"code": code,
 						"title": title,
 						"score": score,
 						# will use this metadata later
-						"exact_match": norm_title in text,
+						"exact_match": exact_match,
 						"parent_code": parents.get(code)
 						})
 

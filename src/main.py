@@ -2,11 +2,10 @@ import json
 import sys
 from pathlib import Path 
 
-from src.preprocessing.normalize import normalize_text
 from src.retrieval.lexical import build_index as build_lexical_index
 from src.retrieval.semantic import build_index as build_semantic_index
 from src.retrieval.hybrid import search as hybrid_search
-from src.reranking.llm import rerank
+from src.reranking.llm import rerank, prepare_candidates
 
 
 # temporary main file to test docker and i/o formats
@@ -43,23 +42,24 @@ def main():
 			note = json.loads(line)
 			print(f"Processing note ID: {note["id"]}")
 
-			# normalize note for retrieval
-			normalized_text = normalize_text(note["text"])
-			
 			# retrieve candidates using hybrid search + RRF fusion
-			candidates = hybrid_search(normalized_text, lexical_conn, parents, model, catalogue, embeddings, limit = 50, method = "rrf")
+			candidates = hybrid_search(note["text"], lexical_conn, parents, model, catalogue, embeddings, limit = 50, method = "rrf")
+
+			# prepare candidates using common pipeline
+			filtered_candidates = prepare_candidates(note["text"], candidates, catalogue_by_code)
 
 			# rerank candidates using LLM
 			codes = []
 
 			try:
 				# keep normalized text only for retrieval, not LLM reranker
-				result = rerank(note["text"], candidates, catalogue_by_code, model = "qwen3:1.7b")
+				result = rerank(note["text"], filtered_candidates, model = "qwen3:1.7b")
 
 				codes = result["codes"]
 
 				print("\nCandidates sent to LLM:")
-				print(result["candidate_codes"])
+				for candidate in result["candidate_details"]:
+					print(candidate["code"], "|", candidate["title"])
 
 				print("\nRaw LLM codes:")
 				print(result["raw_codes"])
@@ -67,15 +67,8 @@ def main():
 				print("\nInvalid LLM codes:")
 				print(result["invalid_codes"])
 
-				print("\nLLM explanation:")
-				print(result["reason"])
-
-				print("\nRaw LLM response:")
-				print(result["raw_response"])
-
-				print("\nCandidates sent to LLM:")
-				for candidate in result["candidate_details"]:
-					print(candidate["code"], "|", candidate["title"])
+				# print("\nLLM explanation:")
+				# print(result["reason"])
 
 			except Exception as e:
 				print(f"LLM error for {note["id"]}: {str(e)}")
