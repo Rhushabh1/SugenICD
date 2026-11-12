@@ -1,7 +1,6 @@
 __pycache__/
 out/
 tests/
-indexes/
-.git
-.venv
-*.pyc
+.git/
+.venv/
+.env

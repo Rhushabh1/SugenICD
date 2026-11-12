@@ -1,11 +1,30 @@
+import os
 import json
 import sys
+import time
 from pathlib import Path 
 
 from src.retrieval.lexical import build_index as build_lexical_index
 from src.retrieval.semantic import build_index as build_semantic_index
 from src.retrieval.hybrid import search as hybrid_search
 from src.reranking.llm import rerank, prepare_candidates
+from src.reranking.fusion import fuse_candidates
+from src.llm.config import get_provider, get_model
+
+
+
+def save_metrics(path, metrics):
+	with open(path, "w", encoding = "utf-8") as file:
+		json.dump(metrics, file, indent = 4)
+
+
+def update_progress(count, total):
+	width = 30
+	filled = int(width * count / total) if total else width
+	bar = "#" * filled + "-" * (width - filled)
+
+	sys.stdout.write(f"\rProgress: [{bar}] {count}/{total}")
+	sys.stdout.flush()
 
 
 # temporary main file to test docker and i/o formats
@@ -17,9 +36,34 @@ def main():
 
 	input_file = Path(sys.argv[1])
 	output_file = Path(sys.argv[2])
-	mms_file = Path("data/mms-2026-01.json")
-
 	output_file.parent.mkdir(parents = True, exist_ok = True)
+
+	data_dir = Path(os.getenv("DATA_DIR", "data"))
+	# using enriched data for retrieval
+	mms_file = data_dir / "mms-2026-01-enriched.json"
+	# using official catalogue to validate final codes
+	official_mms_file = data_dir / "mms-2026-01.json"
+
+	metrics_file = output_file.parent / "run_metrics.json"
+	errors_file = output_file.parent / "errors.jsonl"
+
+	# select provider and model once for the entire run
+	provider = get_provider()
+	model_name = get_model(provider)
+
+	print("Provider:", provider)
+	print("Model:", model_name)
+
+	# count notes for progress bar
+	with open(input_file, "r", encoding = "utf-8") as file:
+		total = sum(1 for line in file if line.strip())
+
+	# load official valid ICD codes
+	with open(official_mms_file, "r", encoding = "utf-8") as file:
+		official_catalogue = json.load(file)
+
+	valid_codes = {entry["code"] for entry in official_catalogue}
+
 
 	# build both retrieval indexes
 	print("Building lexical index...")
@@ -30,66 +74,146 @@ def main():
 
 	catalogue_by_code = {entry["code"]: entry for entry in catalogue}
 
-	print("Lexical & Semantic indexes ready")
+	print("Retrieval indexes ready\n")
 
 	count = 0
+	llm_calls = 0
+	llm_errors = 0
+	fallback_count = 0
+	empty_predictions = 0
+	start_time = time.time()
 
-	with open(input_file, "r", encoding = "utf-8") as infile, open(output_file, "w", encoding = "utf-8") as outfile:
-		for line in infile:
-			if not line.strip():
-				continue
+	metrics = {
+				"provider": provider,
+				"model": model_name,
+				"total_notes": total,
+				"processed_notes": 0,
+				"llm_calls": 0,
+				"llm_errors": 0,
+				"fallback_notes": 0,
+				"empty_predictions": 0
+				}
 
-			note = json.loads(line)
-			print(f"Processing note ID: {note["id"]}")
+	try:
+		with open(input_file, "r", encoding = "utf-8") as infile, open(output_file, "w", encoding = "utf-8") as outfile, open(errors_file, "w", encoding = "utf-8") as errorfile:
 
-			# retrieve candidates using hybrid search + RRF fusion
-			candidates = hybrid_search(note["text"], lexical_conn, parents, model, catalogue, embeddings, limit = 50, method = "rrf")
+			for line in infile:
+				if not line.strip():
+					continue
 
-			# prepare candidates using common pipeline
-			filtered_candidates = prepare_candidates(note["text"], candidates, catalogue_by_code)
+				note = json.loads(line)
+				note_id = note["id"]
 
-			# rerank candidates using LLM
-			codes = []
+				candidates = []
+				filtered_candidates = []
+				llm_codes = []
 
-			try:
-				# keep normalized text only for retrieval, not LLM reranker
-				result = rerank(note["text"], filtered_candidates, model = "qwen3:1.7b")
+				try:
+					# retrieve candidates using top 30 hybrid search + RRF fusion
+					candidates = hybrid_search(note["text"], lexical_conn, parents, model, catalogue, embeddings, limit = 30, method = "rrf")
 
-				codes = result["codes"]
+					# attach leaf metadata & apply filtering
+					filtered_candidates = prepare_candidates(note["text"], candidates, catalogue_by_code)
 
-				print("\nCandidates sent to LLM:")
-				for candidate in result["candidate_details"]:
-					print(candidate["code"], "|", candidate["title"])
+				except Exception as e:
+					errorfile.write(json.dump({
+											"id": note_id,
+											"stage": "retrieval",
+											"error": str(e)
+											}) + "\n")
+					errorfile.flush()
 
-				print("\nRaw LLM codes:")
-				print(result["raw_codes"])
+				# rerank candidates using LLM provider, if available
+				if provider != "offline" and filtered_candidates:
+					llm_calls += 1
 
-				print("\nInvalid LLM codes:")
-				print(result["invalid_codes"])
+					try:
+						# keep normalized text only for retrieval, not LLM reranker
+						result = rerank(note["text"], filtered_candidates, model = model_name, provider = provider)
 
-				# print("\nLLM explanation:")
-				# print(result["reason"])
+						llm_codes = result["codes"]
 
-			except Exception as e:
-				print(f"LLM error for {note["id"]}: {str(e)}")
+					except Exception as e:
+						llm_errors += 1
+						errorfile.write(json.dumps({
+													"id": note_id,
+													"stage": "llm",
+													"error": str(e)
+													}) + "\n")
+						errorfile.flush()
 
-			# final predictions written to outfile
-			prediction = {
-						"id": note["id"],
-						"codes": codes
-						}
+				# combine retrieval (0.3) and LLM rankings (0.7)
+				fused_codes = fuse_candidates(filtered_candidates, llm_codes, retrieval_weight = 0.3, llm_weight = 0.7, k = 60)
 
-			outfile.write(json.dumps(prediction, ensure_ascii = False) + "\n")
-			outfile.flush()
+				# fill any remaining positions from retrieval
+				for candidate in filtered_candidates:
+					code = candidate["code"]
 
-			count+=1
-			print(f"Processed: {count} - {note["id"]}")
+					if len(fused_codes) == 3:
+						break
 
-	print(f"Processed notes: {count}")
-	print(f"Predictions: {output_file}")
+					if code not in fused_codes:
+						fused_codes.append(code)
 
-	lexical_conn.close()
+				# (redundant) final validation against the official mms catalogue
+				final_codes = []
 
+				for code in fused_codes:
+					if code in valid_codes and code not in final_codes:
+						final_codes.append(code)
+
+					if len(final_codes) == 3:
+						break
+
+				if not llm_codes:
+					fallback_count += 1
+
+				if not final_codes:
+					empty_predictions += 1
+
+				# final predictions written to outfile immediately
+				prediction = {
+							"id": note_id,
+							"codes": final_codes
+							}
+
+				outfile.write(json.dumps(prediction, ensure_ascii = False) + "\n")
+				outfile.flush()
+
+				count+=1
+
+				# save metrics at the end
+				metrics["processed_notes"] = count
+				metrics["llm_calls"] = llm_calls
+				metrics["llm_errors"] = llm_errors
+				metrics["fallback_notes"] = fallback_count
+				metrics["empty_predictions"] = empty_predictions
+
+				# progress bar update
+				update_progress(count, total)
+
+	finally:
+		lexical_conn.close()
+
+	elapsed = time.time() - start_time
+
+	metrics["elapsed_seconds"] = round(elapsed, 2)
+	metrics["average_seconds_per_note"] = round(elapsed / count, 2) if count else 0
+
+	save_metrics(metrics_file, metrics)
+
+	print("\n\nRun completed")
+	print("---------------------------------")
+	print("Processed notes:	", count)
+	print("LLM calls:		", llm_calls)
+	print("LLM errors:		", llm_errors)
+	print("Fallback notes:		", fallback_count)
+	print("Empty predictions:	", empty_predictions)
+	print("Elapsed time:		", round(elapsed, 2), "sec")
+	print("---------------------------------")
+	print("Predictions:	", output_file)
+	print("Metrics:	", metrics_file)
+	print("Errors:		", errors_file)
 
 
 if __name__ == "__main__":

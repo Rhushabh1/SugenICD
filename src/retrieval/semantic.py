@@ -1,4 +1,5 @@
 # follows the same structure as lexical.py file
+import os
 import json
 import numpy as np 
 from pathlib import Path
@@ -13,10 +14,11 @@ def build_index(mms_file):
 		catalogue = json.load(file)
 
 	# 384 dimensional embeddings
-	model = TextEmbedding("BAAI/bge-small-en-v1.5")
+	cache_dir = os.getenv("FASTEMBED_CACHE_PATH")
+	model = TextEmbedding("BAAI/bge-small-en-v1.5", cache_dir = cache_dir)
 
 	# save catalogue embeddings for reuse (across runs)
-	index_dir = Path(mms_file).resolve().parent.parent / "indexes"
+	index_dir = Path(os.getenv("INDEX_DIR", Path(mms_file).resolve().parent.parent / "indexes"))
 	index_dir.mkdir(exist_ok = True)
 	index_file = index_dir / "icd_embeddings.npy"
 

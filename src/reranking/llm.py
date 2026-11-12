@@ -111,8 +111,8 @@ def call_openai(model, system_prompt, user_prompt, response_format):
 					content = part["text"]
 					break
 
-	print("OpenAI time:", round(time.time() - start_time, 2), "sec")
-	print("OpenAI usage:", result.get("usage", {}))
+	# print("OpenAI time:", round(time.time() - start_time, 2), "sec")
+	# print("OpenAI usage:", result.get("usage", {}))
 
 	return content
 
@@ -170,8 +170,8 @@ def call_anthropic(model, system_prompt, user_prompt, response_format):
 			content = block["text"]
 			break
 
-	print("Anthropic time:", round(time.time() - start_time, 2), "sec")
-	print("Anthropic usage:", result.get("usage", {}))
+	# print("Anthropic time:", round(time.time() - start_time, 2), "sec")
+	# print("Anthropic usage:", result.get("usage", {}))
 
 	return content
 
@@ -205,9 +205,10 @@ def call_ollama(model, system_prompt, user_prompt, response_format):
 			}
 
 	# API request for ollama
-	request = urllib.request.Request("http://localhost:11434/api/chat",
-										data = json.dumps(body).encode("utf-8"),
-										headers = {"Content-Type": "application/json"})
+	url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434") + "/api/chat"
+	request = urllib.request.Request(url,
+									data = json.dumps(body).encode("utf-8"),
+									headers = {"Content-Type": "application/json"})
 
 	start_time = time.time()
 
@@ -219,10 +220,10 @@ def call_ollama(model, system_prompt, user_prompt, response_format):
 	content = result["message"]["content"].strip()
 
 	# for LLM processing time diagnosis
-	print("Ollama time:", round(time.time() - start_time, 2), "sec")
-	print("Ollama load duration:", round(result.get("load_duration", 0) / 1e9, 2), "sec")
-	print("Ollama prompt tokens:", result.get("prompt_eval_count", 0))
-	print("Ollama generated tokens:", result.get("eval_count", 0))
+	# print("Ollama time:", round(time.time() - start_time, 2), "sec")
+	# print("Ollama load duration:", round(result.get("load_duration", 0) / 1e9, 2), "sec")
+	# print("Ollama prompt tokens:", result.get("prompt_eval_count", 0))
+	# print("Ollama generated tokens:", result.get("eval_count", 0))
 
 	return content
 

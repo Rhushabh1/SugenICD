@@ -159,3 +159,12 @@ decision -> selected gpt-6-luna and claude-haiku-5-5 as low-cost API model candi
 alternative -> use more expensive models or call both providers for every note
 measurement -> current published standard rates show USD 0.1/M input and 0.5/M output tokens, actual workload cost may differ
 
+[11/11/2026, 06:01]
+decision -> verified docker execution with ollama through docker internal
+measurement -> 60/60 notes processed, 0 llm errors, 0 fallbacks, 0 invalid codes, score 40.4/75 by score.py, runtime = 560sec
+alternative -> run ollama inside docker or use API providers for local testing
+revisit -> compare API provider accuracy, latency, and cost when grading creds available, if any
+
+commit 9
+
+
