@@ -203,3 +203,5 @@ issue -> 10/60 LLM responses failed json prsing after reducing num_predict to 25
 - **Measurement** -> 
 - **Alternative** -> use full general-purpose dictionary or translation model, rejected due to noise, download size and runtime complexity
 - **Revisit** -> retaining only if official dev score improves over 40.8/75 baseline
+
+#### Commit 11
