@@ -184,3 +184,22 @@ issue -> 10/60 LLM responses failed json prsing after reducing num_predict to 25
 
 #### Commit 10
 
+#### [07:18]
+- **Decision** -> keep english pipeline untouched for english notes, add small multilingual clinical phrase dictionary in note normalization layer, append english equivalents to note before retrieval ever hits so baseline pipeline is untouched, preserve original note and pass it together with added english terms to the pipeline
+
+#### [07:26]
+- **Decision** -> generated 18 notes synthetic test set with new conditions, poor english and multilingual terms/phrase-expansion, score this set from original dev notes, without changing catalogue embeddings or rebuilding index
+- **Measurement** -> ollama achieved 38.89% top1 and 55.56% top3 compared to offline retrieval at 27% and 50%
+- **Revisit** -> expand with a language extention if time permits
+
+#### [08:20]
+- **Decision** -> compared BGE and miniLM embedding models on same official 60 dev note and expanded 18 notes test set
+- **Measurement** -> BGE [score 40.8/75, top1 0.52, top3 0.6], miniLM [score 33.3/75, top1 0.42, top3 0.5], reverting to BGE because of poor miniLM performance
+- **Alternative** -> retain BGE if miniLM doesn't provide meaningful improvement over baseline scores
+- **Revisit** -> validate the selected model's docker build, cached embeddings and runtime before finalizing
+
+#### [08:50]
+- **Decision** -> extracted a compact marathi english clinical dictionary from public sources, added both this and devanagari keys before retrieval pipeline
+- **Measurement** -> 
+- **Alternative** -> use full general-purpose dictionary or translation model, rejected due to noise, download size and runtime complexity
+- **Revisit** -> retaining only if official dev score improves over 40.8/75 baseline

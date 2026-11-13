@@ -4,6 +4,7 @@ import sys
 import time
 from pathlib import Path 
 
+from src.preprocessing.normalize import expand_indian_terms
 from src.retrieval.lexical import build_index as build_lexical_index
 from src.retrieval.semantic import build_index as build_semantic_index
 from src.retrieval.hybrid import search as hybrid_search
@@ -152,6 +153,10 @@ def main():
 				note = json.loads(line)
 				note_id = note["id"]
 
+				# preserve the original note while adding supported Indian-language
+				# clinical terms for retrieval and reranking
+				note_text = expand_indian_terms(note["text"])
+
 				candidates = []
 				filtered_candidates = []
 				llm_codes = []
@@ -162,10 +167,10 @@ def main():
 
 				try:
 					# retrieve candidates using top 30 hybrid search + RRF fusion
-					candidates = hybrid_search(note["text"], lexical_conn, parents, model, catalogue, embeddings, limit = RETRIEVAL_LIMIT, method = RETRIEVAL_METHOD, K=RETRIEVAL_RRF_K, lexical_weight=RETRIEVAL_LEXICAL_WEIGHT, semantic_weight=RETRIEVAL_SEMANTIC_WEIGHT)
+					candidates = hybrid_search(note_text, lexical_conn, parents, model, catalogue, embeddings, limit = RETRIEVAL_LIMIT, method = RETRIEVAL_METHOD, K=RETRIEVAL_RRF_K, lexical_weight=RETRIEVAL_LEXICAL_WEIGHT, semantic_weight=RETRIEVAL_SEMANTIC_WEIGHT)
 
 					# attach leaf metadata & apply filtering
-					filtered_candidates = prepare_candidates(note["text"], candidates, catalogue_by_code)
+					filtered_candidates = prepare_candidates(note_text, candidates, catalogue_by_code)
 
 				except Exception as e:
 					errorfile.write(json.dumps({
@@ -185,7 +190,7 @@ def main():
 
 					try:
 						# keep normalized text only for retrieval, not LLM reranker
-						result = rerank(note["text"], filtered_candidates, model = model_name, provider = provider)
+						result = rerank(note_text, filtered_candidates, model = model_name, provider = provider)
 
 						llm_codes = result["codes"]
 

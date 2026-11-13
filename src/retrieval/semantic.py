@@ -232,6 +232,7 @@ def build_index(mms_file, semantic_mode = "enriched"):
 	# save catalogue embeddings for reuse (across runs)
 	index_dir = Path(os.getenv("INDEX_DIR", Path(mms_file).resolve().parent.parent / "indexes"))
 	index_dir.mkdir(parents = True, exist_ok = True)
+	
 	# index_file = index_dir / f"icd_embeddings_{semantic_mode}_{fingerprint}.npy"
 	index_file = index_dir / f"icd_embeddings_{semantic_mode}.npy"
 

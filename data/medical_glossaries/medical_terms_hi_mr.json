@@ -1,0 +1,397 @@
+{
+  "उदर": [
+    "abdomen"
+  ],
+  "उदरीय": [
+    "abdominal"
+  ],
+  "उदरीय श्‍वसन": [
+    "abdominal breathing"
+  ],
+  "उदरगुहा": [
+    "abdominal cavity"
+  ],
+  "उदरभित्ति": [
+    "abdominal wall"
+  ],
+  "उदरभित्ति अर्बुद": [
+    "abdominal wall tumour"
+  ],
+  "नेत्र अपवर्तनी स्‍नायु": [
+    "external rectus muscle of eye"
+  ],
+  "छठी कपालीय नर्व": [
+    "sixth cranial nerve"
+  ],
+  "विपथी": [
+    "aberrant"
+  ],
+  "विपथन": [
+    "aberration"
+  ],
+  "मधुमेह": [
+    "diabetes mellitus",
+    "diabetes"
+  ],
+  "शुगर की बीमारी": [
+    "diabetes mellitus"
+  ],
+  "उच्च रक्तचाप": [
+    "hypertension",
+    "high blood pressure"
+  ],
+  "ब्लड प्रेशर": [
+    "blood pressure",
+    "hypertension"
+  ],
+  "रक्तचाप": [
+    "blood pressure"
+  ],
+  "खून की कमी": [
+    "anaemia",
+    "anemia"
+  ],
+  "रक्ताल्पता": [
+    "anaemia",
+    "iron deficiency anaemia"
+  ],
+  "बुखार": [
+    "fever",
+    "pyrexia"
+  ],
+  "तेज बुखार": [
+    "high fever"
+  ],
+  "सिरदर्द": [
+    "headache",
+    "cephalalgia"
+  ],
+  "सरदर्द": [
+    "headache"
+  ],
+  "छाती में दर्द": [
+    "chest pain"
+  ],
+  "सीने में दर्द": [
+    "chest pain"
+  ],
+  "पेट में दर्द": [
+    "abdominal pain"
+  ],
+  "पेट दर्द": [
+    "abdominal pain"
+  ],
+  "सांस लेने में तकलीफ": [
+    "dyspnea",
+    "breathlessness"
+  ],
+  "सांस फूलना": [
+    "dyspnea",
+    "shortness of breath"
+  ],
+  "खांसी": [
+    "cough"
+  ],
+  "सूखी खांसी": [
+    "dry cough"
+  ],
+  "बलगम वाली खांसी": [
+    "productive cough"
+  ],
+  "उल्टी": [
+    "vomiting",
+    "emesis"
+  ],
+  "दस्त": [
+    "diarrhoea",
+    "diarrhea"
+  ],
+  "पतले दस्त": [
+    "watery diarrhoea"
+  ],
+  "पेशाब में जलन": [
+    "dysuria",
+    "painful urination"
+  ],
+  "बार बार पेशाब": [
+    "urinary frequency"
+  ],
+  "जोड़ों का दर्द": [
+    "joint pain",
+    "arthralgia"
+  ],
+  "घुटने में दर्द": [
+    "knee pain"
+  ],
+  "सूजन": [
+    "swelling",
+    "edema"
+  ],
+  "खुजली": [
+    "itching",
+    "pruritus"
+  ],
+  "त्वचा पर चकत्ते": [
+    "skin rash"
+  ],
+  "मधुमेह आहे": [
+    "diabetes mellitus"
+  ],
+  "साखर आहे": [
+    "diabetes mellitus"
+  ],
+  "रक्तदाब वाढला आहे": [
+    "hypertension",
+    "high blood pressure"
+  ],
+  "रक्तदाब": [
+    "blood pressure"
+  ],
+  "ताप": [
+    "fever"
+  ],
+  "डोकेदुखी": [
+    "headache"
+  ],
+  "छातीत दुखणे": [
+    "chest pain"
+  ],
+  "पोट दुखणे": [
+    "abdominal pain"
+  ],
+  "श्वास घेण्यास त्रास": [
+    "dyspnea",
+    "breathlessness"
+  ],
+  "खोकला": [
+    "cough"
+  ],
+  "उलटी": [
+    "vomiting"
+  ],
+  "जुलाब": [
+    "diarrhoea",
+    "diarrhea"
+  ],
+  "लघवी करताना जळजळ": [
+    "dysuria"
+  ],
+  "सांधेदुखी": [
+    "joint pain",
+    "arthralgia"
+  ],
+  "गुडघेदुखी": [
+    "knee pain"
+  ],
+  "सूज": [
+    "swelling",
+    "edema"
+  ],
+  "खाज": [
+    "itching",
+    "pruritus"
+  ],
+  "bukhar": [
+    "fever"
+  ],
+  "tez bukhar": [
+    "high fever"
+  ],
+  "sir dard": [
+    "headache"
+  ],
+  "sar dard": [
+    "headache"
+  ],
+  "pet dard": [
+    "abdominal pain"
+  ],
+  "seene mein dard": [
+    "chest pain"
+  ],
+  "saans lene mein takleef": [
+    "dyspnea",
+    "breathlessness"
+  ],
+  "khansi": [
+    "cough"
+  ],
+  "ulti": [
+    "vomiting"
+  ],
+  "dast": [
+    "diarrhoea",
+    "diarrhea"
+  ],
+  "peshab mein jalan": [
+    "dysuria"
+  ],
+  "jodon ka dard": [
+    "joint pain",
+    "arthralgia"
+  ],
+  "sujan": [
+    "swelling",
+    "edema"
+  ],
+  "khujli": [
+    "itching",
+    "pruritus"
+  ],
+  "madhumeh": [
+    "diabetes mellitus"
+  ],
+  "high BP": [
+    "hypertension"
+  ],
+  "sugar hai": [
+    "diabetes mellitus"
+  ],
+  "दमा": ["asthma"],
+  "अस्थमा": ["asthma"],
+  "सांस की बीमारी": ["respiratory disease"],
+  "फेफड़ों की बीमारी": ["lung disease"],
+  "निमोनिया": ["pneumonia"],
+  "तपेदिक": ["tuberculosis"],
+  "टीबी": ["tuberculosis"],
+  "क्षय रोग": ["tuberculosis"],
+  "मलेरिया": ["malaria"],
+  "डेंगू": ["dengue"],
+  "टाइफाइड": ["typhoid fever"],
+  "पीलिया": ["jaundice"],
+  "किडनी की पथरी": ["kidney stone", "renal calculus"],
+  "गुर्दे की पथरी": ["kidney stone", "renal calculus"],
+  "गुर्दे की बीमारी": ["kidney disease"],
+  "गुर्दे खराब": ["renal impairment"],
+  "मूत्राशय": ["urinary bladder"],
+  "मूत्र मार्ग संक्रमण": ["urinary tract infection"],
+  "पेशाब में खून": ["haematuria", "hematuria"],
+  "पेशाब कम होना": ["decreased urine output"],
+  "पेशाब ज्यादा होना": ["polyuria"],
+  "प्यास ज्यादा लगना": ["polydipsia", "excessive thirst"],
+  "भूख कम लगना": ["loss of appetite", "anorexia"],
+  "वजन कम होना": ["weight loss"],
+  "वजन बढ़ना": ["weight gain"],
+  "थकान": ["fatigue"],
+  "कमजोरी": ["weakness"],
+  "चक्कर आना": ["dizziness", "vertigo"],
+  "बेहोशी": ["syncope", "fainting"],
+  "मिर्गी": ["epilepsy"],
+  "दौरा": ["seizure"],
+  "फिट आना": ["seizure"],
+  "लकवा": ["paralysis"],
+  "पक्षाघात": ["paralysis"],
+  "स्ट्रोक": ["stroke"],
+  "दिल का दौरा": ["myocardial infarction", "heart attack"],
+  "हृदयाघात": ["myocardial infarction"],
+  "दिल की बीमारी": ["heart disease"],
+  "सीने में जकड़न": ["chest tightness"],
+  "धड़कन तेज होना": ["palpitations"],
+  "अनियमित धड़कन": ["cardiac arrhythmia"],
+  "पैरों में सूजन": ["lower limb swelling", "peripheral edema"],
+  "चेहरे पर सूजन": ["facial swelling"],
+  "गले में दर्द": ["sore throat"],
+  "गले में खराश": ["sore throat"],
+  "नाक बहना": ["rhinorrhoea", "runny nose"],
+  "नाक बंद": ["nasal congestion"],
+  "छींक आना": ["sneezing"],
+  "कफ": ["mucus", "sputum"],
+  "खून वाली खांसी": ["haemoptysis", "hemoptysis"],
+  "कब्ज": ["constipation"],
+  "पेट फूलना": ["abdominal bloating"],
+  "गैस": ["flatulence"],
+  "जी मिचलाना": ["nausea"],
+  "मतली": ["nausea"],
+  "अपच": ["indigestion", "dyspepsia"],
+  "एसिडिटी": ["acidity", "acid reflux"],
+  "खट्टी डकार": ["acid regurgitation"],
+  "सीने में जलन": ["heartburn"],
+  "निगलने में कठिनाई": ["dysphagia", "difficulty swallowing"],
+  "मल में खून": ["blood in stool", "rectal bleeding"],
+  "काला मल": ["melena"],
+  "मासिक धर्म": ["menstruation"],
+  "मासिक धर्म में अनियमितता": ["irregular menstruation"],
+  "मासिक धर्म में दर्द": ["dysmenorrhoea", "dysmenorrhea"],
+  "गर्भावस्था": ["pregnancy"],
+  "गर्भपात": ["miscarriage", "abortion"],
+  "बांझपन": ["infertility"],
+  "प्रसव": ["childbirth", "delivery"],
+  "हड्डी टूटना": ["bone fracture"],
+  "फ्रैक्चर": ["fracture"],
+  "कमर दर्द": ["lower back pain"],
+  "पीठ दर्द": ["back pain"],
+  "गर्दन में दर्द": ["neck pain"],
+  "मांसपेशियों में दर्द": ["myalgia", "muscle pain"],
+  "हड्डियों में दर्द": ["bone pain"],
+  "घुटनों में दर्द": ["knee pain"],
+  "जोड़ों में सूजन": ["joint swelling"],
+  "जोड़ों में अकड़न": ["joint stiffness"],
+  "हाथ पैर सुन्न होना": ["numbness of limbs"],
+  "झुनझुनी": ["paraesthesia", "tingling sensation"],
+  "जलना": ["burn"],
+  "जलने का घाव": ["burn injury"],
+  "घाव": ["wound"],
+  "खरोंच": ["abrasion"],
+  "फोड़ा": ["abscess", "boil"],
+  "फुंसी": ["pimple", "skin lesion"],
+  "एलर्जी": ["allergy"],
+  "एक्जिमा": ["eczema"],
+  "सोरायसिस": ["psoriasis"],
+  "त्वचा में संक्रमण": ["skin infection"],
+  "खुजली होना": ["pruritus", "itching"],
+  "आंख में दर्द": ["eye pain"],
+  "आंखों में लालिमा": ["eye redness"],
+  "धुंधला दिखना": ["blurred vision"],
+  "सुनाई कम देना": ["hearing loss"],
+  "कान में दर्द": ["ear pain", "otalgia"],
+  "कान बहना": ["ear discharge"],
+  "दांत दर्द": ["toothache"],
+  "मसूड़ों से खून": ["gingival bleeding"],
+  "सिर घूमना": ["vertigo", "dizziness"],
+  "मानसिक तनाव": ["psychological stress"],
+  "चिंता": ["anxiety"],
+  "अवसाद": ["depression"],
+  "नींद न आना": ["insomnia"],
+  "याददाश्त कम होना": ["memory impairment"],
+  "भ्रम": ["confusion"],
+  "सूखी त्वचा": ["dry skin"],
+  "बाल झड़ना": ["hair loss", "alopecia"],
+  "रक्तस्राव": ["haemorrhage", "hemorrhage"],
+  "खून बहना": ["bleeding"],
+  "खून की उल्टी": ["haematemesis", "hematemesis"],
+  "खून का थक्का": ["blood clot", "thrombosis"],
+  "एनीमिया": ["anaemia", "anemia"],
+  "आयरन की कमी": ["iron deficiency"],
+  "लौह की कमी": ["iron deficiency"],
+  "विटामिन डी की कमी": ["vitamin D deficiency"],
+  "विटामिन बी12 की कमी": ["vitamin B12 deficiency"],
+  "थायराइड": ["thyroid disorder"],
+  "थायराइड की बीमारी": ["thyroid disease"],
+  "मोटापा": ["obesity"],
+  "उच्च कोलेस्ट्रॉल": ["hypercholesterolaemia", "hypercholesterolemia"],
+  "कोलेस्ट्रॉल बढ़ा हुआ": ["high cholesterol"],
+  "शुगर बढ़ी हुई": ["hyperglycaemia", "hyperglycemia"],
+  "शुगर कम होना": ["hypoglycaemia", "hypoglycemia"],
+  "लो बीपी": ["hypotension", "low blood pressure"],
+  "बीपी कम": ["low blood pressure", "hypotension"],
+  "बीपी ज्यादा": ["high blood pressure"],
+  "bp low": ["hypotension", "low blood pressure"],
+  "sugar badhi hui": ["hyperglycaemia", "hyperglycemia"],
+  "peshab zyada hona": ["polyuria"],
+  "bahut pyaas lagna": ["polydipsia", "excessive thirst"],
+  "chakkar aana": ["dizziness", "vertigo"],
+  "saans phoolna": ["dyspnea", "shortness of breath"],
+  "pet phoolna": ["abdominal bloating"],
+  "ji machlana": ["nausea"],
+  "kabz": ["constipation"],
+  "kamar dard": ["lower back pain"],
+  "peeth dard": ["back pain"],
+  "gale mein dard": ["sore throat"],
+  "naak behna": ["runny nose", "rhinorrhoea"],
+  "kaan mein dard": ["ear pain"],
+  "daant dard": ["toothache"],
+  "haddi tootna": ["bone fracture"],
+  "haath pair sunn hona": ["numbness of limbs"],
+  "khoon behna": ["bleeding"],
+  "khoon ki ulti": ["haematemesis", "hematemesis"]
+}

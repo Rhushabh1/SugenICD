@@ -1,0 +1,1347 @@
+{
+  "aabhas": [
+    "hallucination"
+  ],
+  "आभास": [
+    "hallucination"
+  ],
+  "aajar": [
+    "illness",
+    "sickness"
+  ],
+  "आजार": [
+    "illness",
+    "sickness"
+  ],
+  "aamansha": [
+    "dysentery"
+  ],
+  "आमांश": [
+    "dysentery"
+  ],
+  "aandhala": [
+    "blind"
+  ],
+  "आंधळा": [
+    "blind"
+  ],
+  "aavalu": [
+    "tumour"
+  ],
+  "आवाळू": [
+    "tumour"
+  ],
+  "andh": [
+    "blind"
+  ],
+  "अंध": [
+    "blind"
+  ],
+  "andheri": [
+    "dizziness"
+  ],
+  "अंधेरी": [
+    "dizziness"
+  ],
+  "anjirna": [
+    "indigestion"
+  ],
+  "अंजीर्ण": [
+    "indigestion"
+  ],
+  "apachan": [
+    "indigestion",
+    "dyspepsia"
+  ],
+  "अपचन": [
+    "indigestion",
+    "dyspepsia"
+  ],
+  "apasmaar": [
+    "epilepsy"
+  ],
+  "अपस्मार": [
+    "epilepsy"
+  ],
+  "ardhangvaayu": [
+    "paralysis",
+    "palsy"
+  ],
+  "अर्धांगवायु": [
+    "paralysis",
+    "palsy"
+  ],
+  "ardhapoti": [
+    "on a half stomach"
+  ],
+  "अर्धपोटी": [
+    "on a half stomach"
+  ],
+  "asvasthya": [
+    "illness"
+  ],
+  "अस्वास्थ्य": [
+    "illness"
+  ],
+  "atisaar": [
+    "diarrhoea"
+  ],
+  "अतिसार": [
+    "diarrhoea"
+  ],
+  "badadhkoshth": [
+    "constipation"
+  ],
+  "बदधकोष्ठ": [
+    "constipation"
+  ],
+  "bahira": [
+    "deaf",
+    "the deaf"
+  ],
+  "बहिरा": [
+    "deaf",
+    "the deaf"
+  ],
+  "bahirat": [
+    "hard of hearing"
+  ],
+  "बहिरट": [
+    "hard of hearing"
+  ],
+  "balantpan": [
+    "childbirth"
+  ],
+  "बाळंतपण": [
+    "childbirth"
+  ],
+  "bavshir": [
+    "piles",
+    "haemorrhoids"
+  ],
+  "बावशिर": [
+    "piles",
+    "haemorrhoids"
+  ],
+  "bend": [
+    "tumour"
+  ],
+  "बेंड": [
+    "tumour"
+  ],
+  "beshuddhi": [
+    "insensibility",
+    "unconsciousness"
+  ],
+  "बेशुध्दी": [
+    "insensibility",
+    "unconsciousness"
+  ],
+  "bhoval": [
+    "dizziness"
+  ],
+  "भोवळ": [
+    "dizziness"
+  ],
+  "bhovand": [
+    "dizziness"
+  ],
+  "भोवंड": [
+    "dizziness"
+  ],
+  "bhranti": [
+    "hallucination"
+  ],
+  "भ्रांती": [
+    "hallucination"
+  ],
+  "bhrunhatya": [
+    "abortion"
+  ],
+  "भृणहत्या": [
+    "abortion"
+  ],
+  "madhumeh": [
+    "diabetes"
+  ],
+  "मधुमेह": [
+    "diabetes"
+  ],
+  "mahamari": [
+    "cholera"
+  ],
+  "महामारी": [
+    "cholera"
+  ],
+  "malavirodh": [
+    "constipation"
+  ],
+  "मलावरोध": [
+    "constipation"
+  ],
+  "malmal": [
+    "sickness",
+    "nausea",
+    "a feeling of sickness"
+  ],
+  "मलमल": [
+    "sickness",
+    "nausea",
+    "a feeling of sickness"
+  ],
+  "malmalne": [
+    "feel nausea"
+  ],
+  "मळमळणे": [
+    "feel nausea"
+  ],
+  "manovikruti": [
+    "mental disorder"
+  ],
+  "मनोविकृती": [
+    "mental disorder"
+  ],
+  "margal": [
+    "fatigue",
+    "lassitude"
+  ],
+  "मरगळ": [
+    "fatigue",
+    "lassitude"
+  ],
+  "med": [
+    "obesity"
+  ],
+  "मेद": [
+    "obesity"
+  ],
+  "medvruddhi": [
+    "obesity"
+  ],
+  "मेदवृद्धी": [
+    "obesity"
+  ],
+  "mekud": [
+    "a piece of nasal mucus"
+  ],
+  "मेकुड": [
+    "a piece of nasal mucus"
+  ],
+  "mirgi": [
+    "epilepsy"
+  ],
+  "मिरगी": [
+    "epilepsy"
+  ],
+  "mukbadhir": [
+    "deaf and dumb"
+  ],
+  "मुकबधीर": [
+    "deaf and dumb"
+  ],
+  "murchha": [
+    "swoon",
+    "fainting fit"
+  ],
+  "मुर्च्छा": [
+    "swoon",
+    "fainting fit"
+  ],
+  "mutane": [
+    "to urinate"
+  ],
+  "मुतने": [
+    "to urinate"
+  ],
+  "mutkhada": [
+    "a kidney stone",
+    "renal calculus"
+  ],
+  "मुतखडा": [
+    "a kidney stone",
+    "renal calculus"
+  ],
+  "mutra": [
+    "urine"
+  ],
+  "मुत्र": [
+    "urine"
+  ],
+  "mutrapind": [
+    "the kidney"
+  ],
+  "मूत्रपिंड": [
+    "the kidney"
+  ],
+  "mutrashay": [
+    "renal"
+  ],
+  "मूत्राशय": [
+    "renal"
+  ],
+  "raatandhala": [
+    "night-blind"
+  ],
+  "रातांधळा": [
+    "night-blind"
+  ],
+  "raj": [
+    "menstrual discharge"
+  ],
+  "रज": [
+    "menstrual discharge"
+  ],
+  "rajstrav": [
+    "menstruation",
+    "menses"
+  ],
+  "रज:स्त्राव": [
+    "menstruation",
+    "menses"
+  ],
+  "raktabhisran": [
+    "blood circulation"
+  ],
+  "रक्ताभिसरण": [
+    "blood circulation"
+  ],
+  "raktagolak": [
+    "a blood corpuscle"
+  ],
+  "रक्तगोलक": [
+    "a blood corpuscle"
+  ],
+  "raktgat": [
+    "a blood group",
+    "blood type"
+  ],
+  "रक्तगट": [
+    "a blood group",
+    "blood type"
+  ],
+  "raktshay": [
+    "anaemia"
+  ],
+  "रक्तक्षय": [
+    "anaemia"
+  ],
+  "rangandh": [
+    "colour-blind"
+  ],
+  "रंगांध": [
+    "colour-blind"
+  ],
+  "yakrut": [
+    "the liver"
+  ],
+  "यकृत": [
+    "the liver"
+  ],
+  "yatana": [
+    "pain"
+  ],
+  "यातना": [
+    "pain"
+  ],
+  "yoni": [
+    "the vulva"
+  ],
+  "योनी": [
+    "the vulva"
+  ],
+  "yonimarg": [
+    "the vagina"
+  ],
+  "योनिमार्ग": [
+    "the vagina"
+  ],
+  "chakkar": [
+    "dizziness"
+  ],
+  "चक्कर": [
+    "dizziness"
+  ],
+  "chev": [
+    "fever"
+  ],
+  "चेव": [
+    "fever"
+  ],
+  "chhati": [
+    "breast"
+  ],
+  "छाती": [
+    "breast"
+  ],
+  "chinta": [
+    "anxiety"
+  ],
+  "चिंता": [
+    "anxiety"
+  ],
+  "chutput": [
+    "anxiety"
+  ],
+  "चुटपुट": [
+    "anxiety"
+  ],
+  "dah": [
+    "inflammation"
+  ],
+  "दाह": [
+    "inflammation"
+  ],
+  "damavane": [
+    "fatigue"
+  ],
+  "दमवणे": [
+    "fatigue"
+  ],
+  "dangya khokala": [
+    "whooping cough"
+  ],
+  "डांग्या खोकला": [
+    "whooping cough"
+  ],
+  "dat dukhane": [
+    "tooth to ache"
+  ],
+  "दात दुखणे": [
+    "tooth to ache"
+  ],
+  "daurbalya": [
+    "weakness"
+  ],
+  "दौर्बल्य": [
+    "weakness"
+  ],
+  "dhakadhuk": [
+    "anxiety"
+  ],
+  "धाकधूक": [
+    "anxiety"
+  ],
+  "dhas": [
+    "a cough"
+  ],
+  "ढास": [
+    "a cough"
+  ],
+  "dokedukhi": [
+    "headache"
+  ],
+  "डोकेदुखी": [
+    "headache"
+  ],
+  "dukhane": [
+    "to ache",
+    "to feel pain"
+  ],
+  "दुखणे": [
+    "to ache",
+    "to feel pain"
+  ],
+  "dukhavane": [
+    "wound"
+  ],
+  "दुखवणे": [
+    "wound"
+  ],
+  "durbalata": [
+    "weakness"
+  ],
+  "दुर्बलता": [
+    "weakness"
+  ],
+  "fepare": [
+    "epilepsy"
+  ],
+  "फेपरे": [
+    "epilepsy"
+  ],
+  "fikir": [
+    "anxiety"
+  ],
+  "फिकीर": [
+    "anxiety"
+  ],
+  "fuffusadah": [
+    "pneumonia"
+  ],
+  "फुफ्फुसदाह": [
+    "pneumonia"
+  ],
+  "garbhapat": [
+    "abortion",
+    "miscarriage"
+  ],
+  "गर्भपात": [
+    "abortion",
+    "miscarriage"
+  ],
+  "garbhashay": [
+    "the uterus"
+  ],
+  "गर्भाशय": [
+    "the uterus"
+  ],
+  "garbhavastha": [
+    "pregnancy"
+  ],
+  "गर्भावस्था": [
+    "pregnancy"
+  ],
+  "gheri": [
+    "dizziness"
+  ],
+  "घेरी": [
+    "dizziness"
+  ],
+  "ghor": [
+    "anxiety"
+  ],
+  "घोर": [
+    "anxiety"
+  ],
+  "gilane": [
+    "stomach"
+  ],
+  "गिळणे": [
+    "stomach"
+  ],
+  "glani": [
+    "lassitude",
+    "fatigue"
+  ],
+  "ग्लानी": [
+    "lassitude",
+    "fatigue"
+  ],
+  "govar": [
+    "measles"
+  ],
+  "गोवर": [
+    "measles"
+  ],
+  "gudada": [
+    "the kidney"
+  ],
+  "गुडदा": [
+    "the kidney"
+  ],
+  "hagavan": [
+    "diarrhoea",
+    "dysentery"
+  ],
+  "हगवण": [
+    "diarrhoea",
+    "dysentery"
+  ],
+  "hivatap": [
+    "malaria"
+  ],
+  "हिवताप": [
+    "malaria"
+  ],
+  "hrudyarog": [
+    "heart disease"
+  ],
+  "हृदयरोग": [
+    "heart disease"
+  ],
+  "hrudyavikar": [
+    "heart disease"
+  ],
+  "हृदयविकार": [
+    "heart disease"
+  ],
+  "hurahur": [
+    "anxiety"
+  ],
+  "हुरहूर": [
+    "anxiety"
+  ],
+  "isap": [
+    "eczema"
+  ],
+  "इसप": [
+    "eczema"
+  ],
+  "jaadpana": [
+    "obesity"
+  ],
+  "जाडपणा": [
+    "obesity"
+  ],
+  "jakham": [
+    "a wound"
+  ],
+  "जखम": [
+    "a wound"
+  ],
+  "janmandh": [
+    "congentially blind",
+    "congentially blind person"
+  ],
+  "जन्मांध": [
+    "congentially blind",
+    "congentially blind person"
+  ],
+  "jathar": [
+    "the stomach",
+    "abdomen"
+  ],
+  "जठर": [
+    "the stomach",
+    "abdomen"
+  ],
+  "jatyandh": [
+    "congentially blind"
+  ],
+  "जात्यंध": [
+    "congentially blind"
+  ],
+  "julab": [
+    "diarrhoea"
+  ],
+  "जुलाब": [
+    "diarrhoea"
+  ],
+  "jvar": [
+    "a fever"
+  ],
+  "ज्वर": [
+    "a fever"
+  ],
+  "kaf": [
+    "mucus"
+  ],
+  "कफ": [
+    "mucus"
+  ],
+  "kand": [
+    "itch"
+  ],
+  "कंड": [
+    "itch"
+  ],
+  "kanjanya": [
+    "chickenpox"
+  ],
+  "कांजण्या": [
+    "chickenpox"
+  ],
+  "karkrog": [
+    "cancer"
+  ],
+  "कर्करोग": [
+    "cancer"
+  ],
+  "kavil": [
+    "jaundice"
+  ],
+  "कावीळ": [
+    "jaundice"
+  ],
+  "khaj": [
+    "itch"
+  ],
+  "खाज": [
+    "itch"
+  ],
+  "khajane": [
+    "to itch"
+  ],
+  "खाजणे": [
+    "to itch"
+  ],
+  "khakarane": [
+    "to cough"
+  ],
+  "खाकारणे": [
+    "to cough"
+  ],
+  "khalaga": [
+    "depression"
+  ],
+  "खळगा": [
+    "depression"
+  ],
+  "kharuj": [
+    "itch"
+  ],
+  "खरुज": [
+    "itch"
+  ],
+  "khasi": [
+    "cough"
+  ],
+  "खासी": [
+    "cough"
+  ],
+  "khavkhavane": [
+    "to itch"
+  ],
+  "खवखवणे": [
+    "to itch"
+  ],
+  "khinnata": [
+    "depression"
+  ],
+  "खिन्नता": [
+    "depression"
+  ],
+  "khod": [
+    "weakness"
+  ],
+  "खोड": [
+    "weakness"
+  ],
+  "khokala": [
+    "a cough"
+  ],
+  "खोकला": [
+    "a cough"
+  ],
+  "khokane": [
+    "to cough"
+  ],
+  "खोकणे": [
+    "to cough"
+  ],
+  "khumkhumi": [
+    "itch"
+  ],
+  "खुमखुमी": [
+    "itch"
+  ],
+  "kotha": [
+    "the stomach"
+  ],
+  "कोठा": [
+    "the stomach"
+  ],
+  "kshat": [
+    "an ulcer"
+  ],
+  "क्षत": [
+    "an ulcer"
+  ],
+  "kshyarog": [
+    "tuberculosis"
+  ],
+  "क्षयरोग": [
+    "tuberculosis"
+  ],
+  "lagan": [
+    "infection"
+  ],
+  "लागण": [
+    "infection"
+  ],
+  "laghavi": [
+    "urine"
+  ],
+  "लघ्वी": [
+    "urine"
+  ],
+  "laghushanka": [
+    "urine"
+  ],
+  "लघुशंका": [
+    "urine"
+  ],
+  "lakava": [
+    "paralysis"
+  ],
+  "लकवा": [
+    "paralysis"
+  ],
+  "netrahin": [
+    "blind"
+  ],
+  "नेत्रहीन": [
+    "blind"
+  ],
+  "nidranash": [
+    "insomnia"
+  ],
+  "निद्रानाश": [
+    "insomnia"
+  ],
+  "nishchint": [
+    "free from anxiety"
+  ],
+  "निश्चिंत": [
+    "free from anxiety"
+  ],
+  "okane": [
+    "to vomit"
+  ],
+  "ओकणे": [
+    "to vomit"
+  ],
+  "okari": [
+    "vomit"
+  ],
+  "ओकारी": [
+    "vomit"
+  ],
+  "pakshaghat": [
+    "paralysis"
+  ],
+  "पक्षघात": [
+    "paralysis"
+  ],
+  "pandurog": [
+    "anaemia"
+  ],
+  "पंडुरोग": [
+    "anaemia"
+  ],
+  "pataki": [
+    "cholera"
+  ],
+  "पटकी": [
+    "cholera"
+  ],
+  "pittashay": [
+    "liver"
+  ],
+  "पित्ताशय": [
+    "liver"
+  ],
+  "pot": [
+    "stomach"
+  ],
+  "पोट": [
+    "stomach"
+  ],
+  "potdikhi": [
+    "stomach pain",
+    "stomach-ache"
+  ],
+  "पोटदुखी": [
+    "stomach pain",
+    "stomach-ache"
+  ],
+  "pradah": [
+    "an inflammation"
+  ],
+  "प्रदाह": [
+    "an inflammation"
+  ],
+  "prasav": [
+    "childbirth"
+  ],
+  "प्रसव": [
+    "childbirth"
+  ],
+  "prasuti": [
+    "childbirth"
+  ],
+  "प्रसूती": [
+    "childbirth"
+  ],
+  "pural": [
+    "rash"
+  ],
+  "पुरळ": [
+    "rash"
+  ],
+  "rog": [
+    "sickness",
+    "illness",
+    "disease"
+  ],
+  "रोग": [
+    "sickness",
+    "illness",
+    "disease"
+  ],
+  "rograi": [
+    "disease"
+  ],
+  "रोगराई": [
+    "disease"
+  ],
+  "rogsankraman": [
+    "infection",
+    "spread of disease"
+  ],
+  "रोगसंक्रमण": [
+    "infection",
+    "spread of disease"
+  ],
+  "rogsansarg": [
+    "infection"
+  ],
+  "रोगसंसर्ग": [
+    "infection"
+  ],
+  "rudhirabhisaran": [
+    "blood circulation"
+  ],
+  "रुधिराभिसरण": [
+    "blood circulation"
+  ],
+  "rukhrukh": [
+    "anxiety"
+  ],
+  "रुखरुख": [
+    "anxiety"
+  ],
+  "rutukal": [
+    "menstruation"
+  ],
+  "ऋतुकाल": [
+    "menstruation"
+  ],
+  "sanak": [
+    "pain"
+  ],
+  "सणक": [
+    "pain"
+  ],
+  "sansarg": [
+    "infection"
+  ],
+  "संसर्ग": [
+    "infection"
+  ],
+  "shaithilya": [
+    "lassitude"
+  ],
+  "शैथिल्य": [
+    "lassitude"
+  ],
+  "shavasnalikadah": [
+    "bronchitis"
+  ],
+  "श्वासनलिकादाह": [
+    "bronchitis"
+  ],
+  "shembud": [
+    "mucus"
+  ],
+  "शेंबूड": [
+    "mucus"
+  ],
+  "shilak": [
+    "stab of pain"
+  ],
+  "शिळक": [
+    "stab of pain"
+  ],
+  "shin": [
+    "fatigue"
+  ],
+  "शीण": [
+    "fatigue"
+  ],
+  "shinavane": [
+    "to fatigue"
+  ],
+  "शिणवणे": [
+    "to fatigue"
+  ],
+  "shishari": [
+    "nausea"
+  ],
+  "शिसारी": [
+    "nausea"
+  ],
+  "shleshma": [
+    "mucus"
+  ],
+  "श्लेष्मा": [
+    "mucus"
+  ],
+  "shul": [
+    "a sharp pain"
+  ],
+  "शूळ": [
+    "a sharp pain"
+  ],
+  "stan": [
+    "the breast"
+  ],
+  "स्तन": [
+    "the breast"
+  ],
+  "suj": [
+    "a swelling"
+  ],
+  "सूज": [
+    "a swelling"
+  ],
+  "taap": [
+    "a fever"
+  ],
+  "टाप": [
+    "a fever"
+  ],
+  "tengul": [
+    "a swelling"
+  ],
+  "टेंगुळ": [
+    "a swelling"
+  ],
+  "thanaka": [
+    "shooting pain"
+  ],
+  "ठणका": [
+    "shooting pain"
+  ],
+  "thanakane": [
+    "to shoot with pain"
+  ],
+  "ठणकणे": [
+    "to shoot with pain"
+  ],
+  "thanthanane": [
+    "to shoot with pain"
+  ],
+  "ठणठणणे": [
+    "to shoot with pain"
+  ],
+  "thasaka": [
+    "a dry cough"
+  ],
+  "ठसका": [
+    "a dry cough"
+  ],
+  "thasthas": [
+    "a throbbing pain"
+  ],
+  "ठसठस": [
+    "a throbbing pain"
+  ],
+  "thasthasane": [
+    "to shoot with pain"
+  ],
+  "ठसठसणे": [
+    "to shoot with pain"
+  ],
+  "tidik": [
+    "sharp pain"
+  ],
+  "तिडीक": [
+    "sharp pain"
+  ],
+  "ubag": [
+    "nausea"
+  ],
+  "उबग": [
+    "nausea"
+  ],
+  "udaasi": [
+    "depression"
+  ],
+  "उदासी": [
+    "depression"
+  ],
+  "udar": [
+    "stomach",
+    "abdomen"
+  ],
+  "उदर": [
+    "stomach",
+    "abdomen"
+  ],
+  "ulati": [
+    "vomit"
+  ],
+  "उलटी": [
+    "vomit"
+  ],
+  "univ": [
+    "weakness"
+  ],
+  "उणीव": [
+    "weakness"
+  ],
+  "ur": [
+    "the breast"
+  ],
+  "ऊर": [
+    "the breast"
+  ],
+  "usan": [
+    "a sharp pain"
+  ],
+  "उसन": [
+    "a sharp pain"
+  ],
+  "utavala": [
+    "rash"
+  ],
+  "उतावळा": [
+    "rash"
+  ],
+  "utkantha": [
+    "fever"
+  ],
+  "उत्कंठा": [
+    "fever"
+  ],
+  "vaksh": [
+    "breast"
+  ],
+  "वक्ष": [
+    "breast"
+  ],
+  "vakshsthal": [
+    "breast"
+  ],
+  "वक्षस्थळ": [
+    "breast"
+  ],
+  "vanti": [
+    "vomit"
+  ],
+  "वांती": [
+    "vomit"
+  ],
+  "vasnandh": [
+    "blind with lust"
+  ],
+  "वासनांध": [
+    "blind with lust"
+  ],
+  "vavade": [
+    "allergy"
+  ],
+  "वावडे": [
+    "allergy"
+  ],
+  "vedana": [
+    "pain",
+    "ache"
+  ],
+  "वेदना": [
+    "pain",
+    "ache"
+  ],
+  "vikar": [
+    "a disease"
+  ],
+  "विकार": [
+    "a disease"
+  ],
+  "vital": [
+    "menstruation"
+  ],
+  "विटाळ": [
+    "menstruation"
+  ],
+  "vivanchana": [
+    "anxiety"
+  ],
+  "विवंचना": [
+    "anxiety"
+  ],
+  "vyadhi": [
+    "a disease",
+    "illness"
+  ],
+  "व्याधी": [
+    "a disease",
+    "illness"
+  ],
+  "vyatha": [
+    "pain"
+  ],
+  "व्यथा": [
+    "pain"
+  ],
+  "mutrashay": ["urinary bladder"],
+  "मूत्राशय": ["urinary bladder"],
+  "pittashay": ["gallbladder"],
+  "पित्ताशय": ["gallbladder"],
+  "gilane": ["swallowing"],
+  "गिळणे": ["swallowing"],
+  "janmandh": ["congenital blindness"],
+  "जन्मांध": ["congenital blindness"],
+  "jatyandh": ["congenital blindness"],
+  "जात्यंध": ["congenital blindness"],
+  "ताप": ["fever"],
+  "bukhar": ["fever"],
+  "taap": ["fever"],
+  "उच्च रक्तदाब": ["hypertension", "high blood pressure"],
+  "उच्च रक्तदाबाचा त्रास": ["hypertension"],
+  "रक्तदाब वाढलेला": ["high blood pressure"],
+  "रक्तदाब कमी": ["low blood pressure", "hypotension"],
+  "कमी रक्तदाब": ["hypotension", "low blood pressure"],
+  "मधुमेह": ["diabetes mellitus", "diabetes"],
+  "साखर": ["blood glucose", "sugar"],
+  "साखर वाढलेली": ["high blood glucose", "hyperglycaemia"],
+  "लघवी वारंवार होणे": ["urinary frequency"],
+  "वारंवार लघवी": ["urinary frequency"],
+  "लघवीला जळजळ": ["dysuria", "painful urination"],
+  "लघवीत रक्त": ["haematuria", "hematuria"],
+  "लघवी कमी होणे": ["decreased urine output"],
+  "जास्त तहान लागणे": ["polydipsia", "excessive thirst"],
+  "खूप तहान लागणे": ["polydipsia", "excessive thirst"],
+  "भूक न लागणे": ["loss of appetite", "anorexia"],
+  "वजन कमी होणे": ["weight loss"],
+  "वजन वाढणे": ["weight gain"],
+  "थकवा": ["fatigue"],
+  "अशक्तपणा": ["weakness"],
+  "चक्कर येणे": ["dizziness", "vertigo"],
+  "भोवळ येणे": ["dizziness", "vertigo"],
+  "बेशुद्ध पडणे": ["syncope", "fainting"],
+  "आकडी": ["seizure", "convulsion"],
+  "झटके येणे": ["seizure", "convulsion"],
+  "अपस्मार": ["epilepsy"],
+  "पक्षाघात": ["paralysis"],
+  "लकवा": ["paralysis"],
+  "मेंदूचा झटका": ["stroke"],
+  "हृदयविकाराचा झटका": ["myocardial infarction", "heart attack"],
+  "हृदयविकार": ["heart disease"],
+  "छातीत दडपण": ["chest tightness"],
+  "छातीत जडपणा": ["chest heaviness"],
+  "धडधड होणे": ["palpitations"],
+  "अनियमित हृदयाचे ठोके": ["cardiac arrhythmia"],
+  "दमा": ["asthma"],
+  "श्वास घेण्यास त्रास": ["dyspnea", "breathlessness"],
+  "धाप लागणे": ["dyspnea", "shortness of breath"],
+  "फुफ्फुसांचा आजार": ["lung disease"],
+  "न्यूमोनिया": ["pneumonia"],
+  "क्षयरोग": ["tuberculosis"],
+  "टीबी": ["tuberculosis"],
+  "मलेरिया": ["malaria"],
+  "डेंग्यू": ["dengue"],
+  "कावीळ": ["jaundice"],
+  "मूत्रमार्गाचा संसर्ग": ["urinary tract infection"],
+  "मूत्रपिंडाचा आजार": ["kidney disease"],
+  "मूत्रपिंडात खडा": ["kidney stone", "renal calculus"],
+  "मूत्रपिंडातील खडा": ["kidney stone", "renal calculus"],
+  "पित्ताशयातील खडा": ["gallstone"],
+  "मळमळ": ["nausea"],
+  "मळमळणे": ["nausea"],
+  "उलटी होणे": ["vomiting"],
+  "जुलाब होणे": ["diarrhoea", "diarrhea"],
+  "अतिसार": ["diarrhoea", "diarrhea"],
+  "बद्धकोष्ठता": ["constipation"],
+  "पोट फुगणे": ["abdominal bloating"],
+  "पोटात गॅस": ["flatulence"],
+  "अपचन": ["indigestion", "dyspepsia"],
+  "आम्लपित्त": ["acid reflux", "gastroesophageal reflux"],
+  "छातीत जळजळ": ["heartburn"],
+  "आंबट ढेकर": ["acid regurgitation"],
+  "गिळण्यास त्रास": ["dysphagia", "difficulty swallowing"],
+  "मलात रक्त": ["blood in stool", "rectal bleeding"],
+  "काळी विष्ठा": ["melena"],
+  "घशात दुखणे": ["sore throat"],
+  "नाक वाहणे": ["runny nose", "rhinorrhoea"],
+  "नाक बंद होणे": ["nasal congestion"],
+  "शिंका येणे": ["sneezing"],
+  "कफ": ["mucus", "sputum"],
+  "रक्ताची उलटी": ["haematemesis", "hematemesis"],
+  "खोकल्यातून रक्त येणे": ["haemoptysis", "hemoptysis"],
+  "खोकला येणे": ["cough"],
+  "कोरडा खोकला": ["dry cough"],
+  "कफासह खोकला": ["productive cough"],
+  "पाठदुखी": ["back pain"],
+  "कंबरदुखी": ["lower back pain"],
+  "मानदुखी": ["neck pain"],
+  "स्नायू दुखणे": ["myalgia", "muscle pain"],
+  "हाड दुखणे": ["bone pain"],
+  "सांधे दुखणे": ["joint pain", "arthralgia"],
+  "सांध्यांना सूज": ["joint swelling"],
+  "सांधे आखडणे": ["joint stiffness"],
+  "हातापायांना मुंग्या येणे": ["tingling sensation", "paraesthesia"],
+  "हातापायांना बधिरपणा": ["numbness of limbs"],
+  "हातापायांना सूज": ["limb swelling", "peripheral edema"],
+  "चेहऱ्याला सूज": ["facial swelling"],
+  "खाज येणे": ["itching", "pruritus"],
+  "त्वचेवर पुरळ": ["skin rash"],
+  "त्वचेचा संसर्ग": ["skin infection"],
+  "इसब": ["eczema"],
+  "सोरायसिस": ["psoriasis"],
+  "जखम": ["wound"],
+  "भाजणे": ["burn injury"],
+  "हाड मोडणे": ["bone fracture"],
+  "मासिक पाळी": ["menstruation"],
+  "अनियमित मासिक पाळी": ["irregular menstruation"],
+  "मासिक पाळीत वेदना": ["dysmenorrhoea", "dysmenorrhea"],
+  "गर्भधारणा": ["pregnancy"],
+  "गर्भपात": ["miscarriage", "abortion"],
+  "वंध्यत्व": ["infertility"],
+  "प्रसूती": ["childbirth", "delivery"],
+  "रक्तक्षय": ["anaemia", "anemia"],
+  "अॅनिमिया": ["anaemia", "anemia"],
+  "लोहाची कमतरता": ["iron deficiency"],
+  "लोहाच्या कमतरतेमुळे रक्तक्षय": ["iron deficiency anaemia", "iron deficiency anemia"],
+  "व्हिटॅमिन डीची कमतरता": ["vitamin D deficiency"],
+  "व्हिटॅमिन बी१२ची कमतरता": ["vitamin B12 deficiency"],
+  "थायरॉईडचा आजार": ["thyroid disease"],
+  "लठ्ठपणा": ["obesity"],
+  "कोलेस्टेरॉल वाढणे": ["high cholesterol"],
+  "चिंता": ["anxiety"],
+  "नैराश्य": ["depression"],
+  "निद्रानाश": ["insomnia"],
+  "स्मरणशक्ती कमी होणे": ["memory impairment"],
+  "गोंधळलेली अवस्था": ["confusion"],
+  "दृष्टी धूसर होणे": ["blurred vision"],
+  "डोळे लाल होणे": ["eye redness"],
+  "डोळ्यात दुखणे": ["eye pain"],
+  "कान दुखणे": ["ear pain", "otalgia"],
+  "कानातून स्त्राव": ["ear discharge"],
+  "ऐकू कमी येणे": ["hearing loss"],
+  "दातदुखी": ["toothache"],
+  "हिरड्यांतून रक्त येणे": ["gingival bleeding"],
+  "केस गळणे": ["hair loss", "alopecia"],
+  "रक्तस्राव": ["bleeding", "haemorrhage"],
+  "रक्ताची गुठळी": ["blood clot", "thrombosis"],
+  "सूज येणे": ["swelling", "edema"],
+  "लैंगिक संसर्ग": ["sexually transmitted infection"],
+  "संसर्ग": ["infection"],
+  "अॅलर्जी": ["allergy"],
+  "कर्करोग": ["cancer"],
+  "गाठ": ["lump", "mass"],
+  "अर्बुद": ["tumour", "tumor"],
+  "aamla pitta": ["acid reflux", "gastroesophageal reflux"],
+  "amlatta": ["acidity"],
+  "ghashat dukhat": ["sore throat"],
+  "shwas ghenyas tras": ["dyspnea", "breathlessness"],
+  "dhap lagane": ["shortness of breath", "dyspnea"],
+  "laghavi warwar hone": ["urinary frequency"],
+  "laghavi kartana jaljal": ["dysuria"],
+  "laghavit rakt": ["haematuria", "hematuria"],
+  "khup tahaan lagane": ["polydipsia", "excessive thirst"],
+  "bhuk na lagane": ["loss of appetite"],
+  "thakava": ["fatigue"],
+  "ashaktapana": ["weakness"],
+  "chakkar yene": ["dizziness", "vertigo"],
+  "beshuddha padane": ["syncope", "fainting"],
+  "akadi yene": ["seizure", "convulsion"],
+  "mutrapindacha aajar": ["kidney disease"],
+  "mutrapindat khada": ["kidney stone", "renal calculus"],
+  "pittashayat khada": ["gallstone"],
+  "pot phugane": ["abdominal bloating"],
+  "malmalane": ["nausea"],
+  "ulti hone": ["vomiting"],
+  "julaab hone": ["diarrhoea", "diarrhea"],
+  "baddhakoshthata": ["constipation"],
+  "pathdukhi": ["back pain"],
+  "kambardukhi": ["lower back pain"],
+  "mandukhi": ["neck pain"],
+  "snayu dukhan": ["muscle pain", "myalgia"],
+  "sandhe dukhan": ["joint pain", "arthralgia"],
+  "hatapayanna mungya yene": ["tingling sensation", "paraesthesia"],
+  "hatapayanna badhirpana": ["numbness of limbs"],
+  "khaj yene": ["itching", "pruritus"],
+  "tvachevar purळ": ["skin rash"],
+  "hade modane": ["bone fracture"],
+  "garbhadharana": ["pregnancy"],
+  "vandhyatva": ["infertility"],
+  "lohachi kamtarata": ["iron deficiency"],
+  "vitamin D chi kamtarata": ["vitamin D deficiency"],
+  "kes galane": ["hair loss", "alopecia"],
+  "drushti dhusar hone": ["blurred vision"],
+  "kan dukhan": ["ear pain"],
+  "dantdukhi": ["toothache"],
+  "rakta strav": ["bleeding", "haemorrhage"]
+}
