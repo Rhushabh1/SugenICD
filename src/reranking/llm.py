@@ -219,7 +219,7 @@ def call_ollama(model, system_prompt, user_prompt, response_format):
 	# parsing explicit json format
 	content = result["message"]["content"].strip()
 
-	# for LLM processing time diagnosis
+	# # for LLM processing time diagnosis
 	# print("Ollama time:", round(time.time() - start_time, 2), "sec")
 	# print("Ollama load duration:", round(result.get("load_duration", 0) / 1e9, 2), "sec")
 	# print("Ollama prompt tokens:", result.get("prompt_eval_count", 0))

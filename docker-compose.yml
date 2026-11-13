@@ -5,13 +5,24 @@ services:
       DATA_DIR: /in
       FASTEMBED_CACHE_PATH: /opt/fastembed
       INDEX_DIR: /app/indexes
-      LLM_PROVIDER: ${LLM_PROVIDER:-ollama}
+      
+      # automatically select an available API provider
+      LLM_PROVIDER: ${LLM_PROVIDER:-auto}
+      
+      # API credentials supplied by the evaluator
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       OPENAI_MODEL: ${OPENAI_MODEL:-gpt-6-luna}
+      
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-haiku-5-5}
+      
+      # local ollama dev
       OLLAMA_BASE_URL: http://host.docker.internal:11434
-      OLLAMA_MODEL: ${OLLAMA_MODEL:-"qwen3:1.7b}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3:1.7b}
+
+      # evaluator supplies the HTTPS proxy
+      HTTPS_PROXY: ${HTTPS_PROXY:-}
+
     volumes: 
       - ./data:/in:ro
       - ./out:/out

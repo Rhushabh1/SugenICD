@@ -32,7 +32,7 @@ def normalize_scores(results, higher_is_better = True):
 
 # combine lexical and semantic rankings using RRF (K = 60)
 # same parents mapping for both retrievers (constant across retrievers)
-def search(note, lexical_conn, parents, model, catalogue, embeddings, limit = 50, method = "rrf", K = 60):
+def search(note, lexical_conn, parents, model, catalogue, embeddings, limit = 50, method = "rrf", K = 60, lexical_weight = 0.8, semantic_weight = 0.2):
 	# gather both results
 	lexical_results = lexical_search(note, lexical_conn, parents, limit = limit)
 	semantic_results = semantic_search(note, model, catalogue, embeddings, parents, limit = limit)
@@ -99,9 +99,9 @@ def search(note, lexical_conn, parents, model, catalogue, embeddings, limit = 50
 		# lexical = 0.7, semantic = 0.3
 		elif method == "weighted_rrf":
 			if lexical_rank is not None:
-				result["combined_score"] += 0.7 / (K + lexical_rank)
+				result["combined_score"] += lexical_weight / (K + lexical_rank)
 			if semantic_rank is not None:
-				result["combined_score"] += 0.3 / (K + semantic_rank)
+				result["combined_score"] += semantic_weight / (K + semantic_rank)
 
 		# normalize scores to 0-1 and then combine then using same weighted RRF
 		elif method == "combsum":

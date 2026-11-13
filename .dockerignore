@@ -1,6 +1,10 @@
 __pycache__/
+*.py[cod]
 out/
 tests/
 .git/
 .venv/
+venv/
 .env
+.env.*
+!.env.example
